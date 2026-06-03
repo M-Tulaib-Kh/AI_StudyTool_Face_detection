@@ -1,0 +1,107 @@
+name: studylock
+description: AI-Powered Academic Focus Platform
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Core
+  flutter_dotenv: ^5.2.1
+  flutter_riverpod: ^2.6.1
+  go_router: ^14.8.1
+  flutter_animate: ^4.5.2
+  google_fonts: ^6.2.1
+  intl: ^0.19.0
+  uuid: ^4.5.1
+  logging: ^1.2.0
+
+  # Supabase
+  supabase_flutter: ^2.8.4
+
+  # AI / ML
+  google_generative_ai: ^0.4.6
+  google_mlkit_face_detection: ^0.11.0
+
+  # Camera / Media
+  camera: ^0.11.0+2
+  image_picker: ^1.1.2
+
+  # Files
+  file_picker: ^8.1.7
+  path_provider: ^2.1.5
+  open_filex: ^4.6.0
+  dio: ^5.7.0
+
+  # PDF
+  syncfusion_flutter_pdfviewer: ^27.1.48
+
+  # Notifications
+  flutter_local_notifications: ^18.0.1
+  timezone: ^0.9.4
+
+  # UI
+  cached_network_image: ^3.4.1
+  shimmer: ^3.0.0
+  fl_chart: ^0.70.2
+  percent_indicator: ^4.2.4
+
+  # Storage / Offline
+  shared_preferences: ^2.3.5
+  sqflite: ^2.4.1
+  flutter_secure_storage: ^9.2.4
+
+  # Device / System
+  permission_handler: ^11.3.1
+  device_info_plus: ^10.1.2
+  connectivity_plus: ^6.1.3
+  vibration: ^2.0.1
+  url_launcher: ^6.3.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.14.1
+  flutter_native_splash: ^2.4.1
+
+# ── App Icon Configuration ─────────────────────────────────────
+# Run: dart run flutter_launcher_icons
+# Place icon at: assets/images/app_icon.png (1024x1024, no alpha)
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/app_icon.png"
+  adaptive_icon_background: "#060E1A"
+  adaptive_icon_foreground: "assets/images/app_icon.png"
+  min_sdk_android: 21
+  web:
+    generate: true
+    image_path: "assets/images/app_icon.png"
+    background_color: "#060E1A"
+    theme_color: "#5B8FF9"
+
+# ── Splash Screen Configuration ────────────────────────────────
+# Run: dart run flutter_native_splash:create
+flutter_native_splash:
+  color: "#060E1A"
+  color_dark: "#060E1A"
+  android_12:
+    color: "#060E1A"
+    color_dark: "#060E1A"
+  fullscreen: false
+  android: true
+  ios: true
+  web: true
+
+flutter:
+  uses-material-design: true
+  assets:
+    - .env
+    - assets/images/
+    - assets/icons/
+    - assets/lottie/

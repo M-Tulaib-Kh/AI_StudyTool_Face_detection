@@ -1,0 +1,22 @@
+// Root build.gradle
+// Plugin versions are declared in settings.gradle (pluginManagement block).
+// Do NOT add a buildscript{} block here — it conflicts with settings.gradle pluginManagement.
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
