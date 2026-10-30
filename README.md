@@ -29,7 +29,7 @@ cp .env.example .env
 # File: supabase/migrations/001_full_schema.sql
 ```
 
-### 4. Run on Redmi Note 13
+### 4. Run on PHONE
 ```bash
 # Enable USB Debugging on phone:
 # Settings → About Phone → tap MIUI Version 7 times → Developer Options → USB Debugging ON
