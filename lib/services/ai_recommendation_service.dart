@@ -1,4 +1,4 @@
-import '../services/gemini_service.dart';
+import '../services/ai_service.dart';
 import '../data/models/models.dart';
 
 class AIRecommendationService {
@@ -35,7 +35,7 @@ Weak subjects: ${weakSubjects.isEmpty ? 'None' : weakSubjects.join(', ')}
 Provide 3 concise, actionable study recommendations.
 ''';
 
-    final result = await GeminiService.instance.generateAssignment(
+    final result = await AiService.instance.generateAssignment(
       subject: 'General',
       prompt: prompt,
     );
@@ -48,7 +48,7 @@ Provide 3 concise, actionable study recommendations.
     required double currentLevel,
   }) async {
     final level = currentLevel >= 80 ? 'advanced' : currentLevel >= 50 ? 'intermediate' : 'beginner';
-    final result = await GeminiService.instance.generateAssignment(
+    final result = await AiService.instance.generateAssignment(
       subject: subject,
       prompt: 'Create a 4-week learning path for a $level level student in $subject.',
     );

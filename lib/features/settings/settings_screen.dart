@@ -156,7 +156,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ),
           const SizedBox(height: 24),
           Center(
-            child: Text('StudyLock v1.0.0 • Powered by Gemini AI',
+            child: Text('StudyLock v1.0.0 • Powered by AI',
               style: const TextStyle(color: AppColors.darkMuted, fontSize: 11)),
           ),
           const SizedBox(height: 32),

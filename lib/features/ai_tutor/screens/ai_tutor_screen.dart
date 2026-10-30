@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_theme.dart';
-import '../../../services/gemini_service.dart';
+import '../../../services/ai_service.dart';
 
 class _ChatMessage {
   final String text;
@@ -44,7 +44,7 @@ class _AITutorScreenState extends ConsumerState<AITutorScreen> {
     _scrollToBottom();
 
     try {
-      final result = await GeminiService.instance.generateAssignment(
+      final result = await AiService.instance.generateAssignment(
         subject: 'Academic Tutoring',
         prompt: 'As a helpful academic tutor, answer this student question clearly and concisely:\n\n$text\n\nProvide a clear explanation with examples if needed. Keep response under 300 words.',
       );
@@ -88,7 +88,7 @@ class _AITutorScreenState extends ConsumerState<AITutorScreen> {
           const SizedBox(width: 10),
           const Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text('AI Tutor', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700, fontSize: 16)),
-            Text('Powered by Gemini', style: TextStyle(color: AppColors.darkMuted, fontSize: 11)),
+            Text('Powered by AI', style: TextStyle(color: AppColors.darkMuted, fontSize: 11)),
           ]),
         ]),
         backgroundColor: AppColors.darkBackground,

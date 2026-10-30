@@ -6,7 +6,7 @@ import '../../../core/theme/app_theme.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/academic_provider.dart';
 import '../../../data/models/models.dart';
-import '../../../services/gemini_service.dart';
+import '../../../services/ai_service.dart';
 import '../../../shared/widgets/app_button.dart';
 
 class GradeSubmissionScreen extends ConsumerStatefulWidget {
@@ -31,7 +31,7 @@ class _GradeSubmissionScreenState extends ConsumerState<GradeSubmissionScreen> {
     }
     setState(() => _aiGrading = true);
     try {
-      final result = await GeminiService.instance.gradeSubmission(
+      final result = await AiService.instance.gradeSubmission(
         assignmentPrompt: '${assign.title}\n${assign.description}\n${assign.instructions}',
         submissionText: 'Student submitted file: ${sub.fileName}. Please evaluate based on assignment requirements.',
         totalMarks: assign.totalMarks);

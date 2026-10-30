@@ -1,4 +1,4 @@
-import '../services/gemini_service.dart';
+import '../services/ai_service.dart';
 import '../data/models/models.dart';
 
 class AIPerformanceService {
@@ -31,7 +31,7 @@ Provide: 1) Performance summary 2) Key strengths 3) Areas to improve
 Keep response concise and encouraging.
 ''';
 
-    final result = await GeminiService.instance.generateAssignment(
+    final result = await AiService.instance.generateAssignment(
       subject: 'Performance Analysis',
       prompt: prompt,
     );

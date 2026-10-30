@@ -7,7 +7,7 @@ import '../../../providers/academic_provider.dart';
 import '../../../providers/auth_provider.dart';
 // ignore: unused_import
 import '../../../data/models/models.dart';
-import '../../../services/gemini_service.dart';
+import '../../../services/ai_service.dart';
 import '../../../shared/widgets/app_button.dart';
 
 class QuizAttemptScreen extends ConsumerStatefulWidget {
@@ -76,7 +76,7 @@ class _QuizAttemptScreenState extends ConsumerState<QuizAttemptScreen> {
               score: score,
               totalMarks: quiz.totalMarks);
       // AI grade in background
-      GeminiService.instance
+      AiService.instance
           .gradeQuiz(questions: quiz.questions, studentAnswers: _answers)
           .then((result) {
         ref
