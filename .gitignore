@@ -62,3 +62,13 @@ Thumbs.db
 # LOGS
 # =========================
 *.log
+# Local / generated environment files
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/Generated.xcconfig
+env.json
+*.env
+.env.*
+!.env.example
+android/key.properties
+*.jks
+*.keystore
