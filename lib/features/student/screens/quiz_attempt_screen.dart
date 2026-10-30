@@ -7,7 +7,6 @@ import '../../../providers/academic_provider.dart';
 import '../../../providers/auth_provider.dart';
 // ignore: unused_import
 import '../../../data/models/models.dart';
-import '../../../services/ai_service.dart';
 import '../../../shared/widgets/app_button.dart';
 
 class QuizAttemptScreen extends ConsumerStatefulWidget {
@@ -75,16 +74,6 @@ class _QuizAttemptScreenState extends ConsumerState<QuizAttemptScreen> {
               answers: _answers,
               score: score,
               totalMarks: quiz.totalMarks);
-      // AI grade in background
-      AiService.instance
-          .gradeQuiz(questions: quiz.questions, studentAnswers: _answers)
-          .then((result) {
-        ref
-            .read(academicProvider)
-            .attempts
-            .where((a) => a.id == attempt.id)
-            .firstOrNull;
-      }).ignore();
       if (mounted) context.go('/quiz-result/${attempt.id}');
     } catch (e) {
       if (mounted) {

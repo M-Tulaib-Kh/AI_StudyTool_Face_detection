@@ -97,16 +97,16 @@ class AuthNotifier extends StateNotifier<AuthState> {
       UserRole role = UserRole.student}) async {
     state = state.copyWith(isLoading: true, clearError: true);
     try {
+      // Role is never chosen by the client. A lecturer signup only creates a
+      // pending request (server trigger); an admin must approve it.
       final r = await SupabaseConfig.auth.signUp(
           email: email.trim().toLowerCase(),
           password: password,
-          data: {'full_name': fullName});
+          data: {
+            'full_name': fullName,
+            if (role == UserRole.lecturer) 'requested_role': 'lecturer',
+          });
       if (r.user != null) {
-        if (role != UserRole.student) {
-          await SupabaseConfig.client
-              .from('user_roles')
-              .update({'role': role.value}).eq('user_id', r.user!.id);
-        }
         await SupabaseConfig.client
             .from('profiles')
             .update({'full_name': fullName}).eq('id', r.user!.id);
