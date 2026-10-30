@@ -150,3 +150,6 @@ Settings → Notifications → StudyLock → Allow notifications
 ---
 
 *StudyLock V2 — Built with Flutter 3.44 | June 2026*
+
+ALL RIGHTS RESERVED FOR | M TULAIB KH  
+
