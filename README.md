@@ -1,4 +1,4 @@
-# 🎓 StudyLock V2
+# 🎓AI StudyLock APP 
 
 **AI-Powered Academic Focus Platform**  
 Flutter + Supabase + Riverpod + Gemini AI
