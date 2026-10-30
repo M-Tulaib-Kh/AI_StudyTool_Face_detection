@@ -172,3 +172,26 @@ final attendanceProvider =
     StateNotifierProvider<AttendanceNotifier, AttendanceState>(
   (ref) => AttendanceNotifier(),
 );
+
+/// A student enrolled in a course (as returned by the `get_course_roster` RPC).
+class RosterStudent {
+  final String id;
+  final String name;
+  const RosterStudent({required this.id, required this.name});
+}
+
+/// Enrolled students for a course. Only the course's lecturer or an admin is allowed
+/// by the database function; anyone else gets an error.
+final courseRosterProvider =
+    FutureProvider.autoDispose.family<List<RosterStudent>, String>((ref, courseId) async {
+  final data = await SupabaseConfig.client
+      .rpc('get_course_roster', params: {'p_course_id': courseId});
+  return (data as List)
+      .map((j) => RosterStudent(
+            id: j['student_id'] as String,
+            name: (j['full_name'] as String?)?.trim().isNotEmpty == true
+                ? j['full_name'] as String
+                : 'Unnamed student',
+          ))
+      .toList();
+});

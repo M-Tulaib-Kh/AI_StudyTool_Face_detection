@@ -203,7 +203,13 @@ class _LecturerViewState extends ConsumerState<_LecturerView> {
         lecturerId: widget.user.id as String,
         date: widget.selectedDate,
         studentStatuses: _statuses,
-        studentNames: {for (final e in _statuses.entries) e.key: e.key},
+        studentNames: {
+          for (final st in ref
+                  .read(courseRosterProvider(widget.selectedCourseId!))
+                  .valueOrNull ??
+              const <RosterStudent>[])
+            st.id: st.name
+        },
       );
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -353,7 +359,7 @@ class _LecturerViewState extends ConsumerState<_LecturerView> {
   }
 }
 
-class _StudentAttendanceList extends StatelessWidget {
+class _StudentAttendanceList extends ConsumerWidget {
   final String courseId;
   final Map<String, AttendanceStatus> statuses;
   final void Function(String, AttendanceStatus) onStatusChanged;
@@ -365,28 +371,76 @@ class _StudentAttendanceList extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    // In a real app, fetch enrolled students for this course
-    // For now, show a placeholder
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.people_outline,
-                size: 48, color: AppColors.darkMuted),
-            const SizedBox(height: 12),
-            const Text('No enrolled students found',
-                style: TextStyle(color: AppColors.darkMuted)),
-            const SizedBox(height: 8),
-            Text('Ensure students are enrolled in course $courseId',
-                style:
-                    const TextStyle(color: AppColors.darkMuted, fontSize: 12),
-                textAlign: TextAlign.center),
-          ],
+  Widget build(BuildContext context, WidgetRef ref) {
+    final roster = ref.watch(courseRosterProvider(courseId));
+    return roster.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (_, __) => const Center(
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Text('Could not load students for this course.',
+              style: TextStyle(color: AppColors.darkMuted),
+              textAlign: TextAlign.center),
         ),
       ),
+      data: (students) {
+        if (students.isEmpty) {
+          return const Center(
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.people_outline, size: 48, color: AppColors.darkMuted),
+                  SizedBox(height: 12),
+                  Text('No enrolled students found',
+                      style: TextStyle(color: AppColors.darkMuted)),
+                  SizedBox(height: 8),
+                  Text('Students must enrol in this course first.',
+                      style: TextStyle(color: AppColors.darkMuted, fontSize: 12),
+                      textAlign: TextAlign.center),
+                ],
+              ),
+            ),
+          );
+        }
+        return ListView.separated(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          itemCount: students.length,
+          separatorBuilder: (_, __) => const SizedBox(height: 8),
+          itemBuilder: (_, i) {
+            final st = students[i];
+            final current = statuses[st.id];
+            return Container(
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: AppColors.darkCard,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: AppColors.darkBorder),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(st.name,
+                      style: const TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.w600)),
+                  const SizedBox(height: 8),
+                  Wrap(
+                    spacing: 8,
+                    children: AttendanceStatus.values.map((a) {
+                      return ChoiceChip(
+                        label: Text(a.label),
+                        selected: current == a,
+                        onSelected: (_) => onStatusChanged(st.id, a),
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }
