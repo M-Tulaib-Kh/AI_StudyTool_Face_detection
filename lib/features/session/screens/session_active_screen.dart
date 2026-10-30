@@ -11,7 +11,7 @@ import 'package:studylock/data/models/models.dart' show SessionStatus;
 import 'package:vibration/vibration.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../core/theme/app_theme.dart';
-import '../../../data/services/notification_service.dart';
+import '../../../services/notification_service.dart';
 import '../../../providers/session_provider.dart';
 import '../../../providers/game_provider.dart';
 import '../widgets/circular_timer_widget.dart';

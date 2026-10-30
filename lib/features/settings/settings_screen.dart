@@ -5,7 +5,7 @@ import '../../core/theme/app_theme.dart';
 import '../../providers/auth_provider.dart';
 import '../../data/models/models.dart';
 import '../../features/theme/theme_provider.dart';
-import '../../data/services/notification_service.dart';
+import '../../services/notification_service.dart';
 import '../../shared/widgets/app_button.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {

@@ -5,7 +5,7 @@ import '../../../core/theme/app_theme.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/academic_provider.dart';
 import '../../../data/models/models.dart';
-import '../../../data/services/storage_service.dart';
+import '../../../services/storage_service.dart';
 import '../../../shared/widgets/app_button.dart';
 import '../../../services/gemini_service.dart';
 
