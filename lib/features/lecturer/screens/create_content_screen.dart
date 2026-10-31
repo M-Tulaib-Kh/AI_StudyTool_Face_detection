@@ -5,9 +5,9 @@ import '../../../core/theme/app_theme.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/academic_provider.dart';
 import '../../../data/models/models.dart';
-import '../../../data/services/storage_service.dart';
+import '../../../services/storage_service.dart';
 import '../../../shared/widgets/app_button.dart';
-import '../../../services/gemini_service.dart';
+import '../../../services/ai_service.dart';
 
 class CreateContentScreen extends ConsumerStatefulWidget {
   final String type; // 'lecture' | 'assignment' | 'quiz'
@@ -104,7 +104,7 @@ class _CreateContentScreenState extends ConsumerState<CreateContentScreen> {
     setState(() => _aiGenerating = true);
     try {
       if (widget.type == 'assignment') {
-        final r = await GeminiService.instance.generateAssignment(
+        final r = await AiService.instance.generateAssignment(
             subject: _subject.text.trim(), prompt: _aiPrompt.text.trim());
         if (mounted) {
           setState(() {
@@ -115,7 +115,7 @@ class _CreateContentScreenState extends ConsumerState<CreateContentScreen> {
         }
       } else if (widget.type == 'quiz') {
         final count = int.tryParse(_quizCount.text) ?? 5;
-        final qs = await GeminiService.instance.generateQuiz(
+        final qs = await AiService.instance.generateQuiz(
             subject: _subject.text.trim(),
             prompt: _aiPrompt.text.trim(),
             count: count);

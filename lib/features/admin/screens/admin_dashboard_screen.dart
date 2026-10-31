@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:postgrest/postgrest.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/config/supabase_config.dart';
 import '../../../providers/academic_provider.dart';

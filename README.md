@@ -1,155 +1,81 @@
-# 🎓AI StudyLock APP 
+# StudyLock — AI Study Focus Platform
 
-**AI-Powered Academic Focus Platform**  
-Flutter + Supabase + Riverpod + Gemini AI
+Flutter + Supabase app that helps students stay focused (on-device face detection during study
+sessions) and gives lecturers AI-assisted quizzes, assignments and grading. Roles: student,
+lecturer, admin.
 
----
+## Features
+- Focus sessions with on-device face detection (Google ML Kit): face missing, eyes closed, app left
+- AI quiz / assignment generation and submission grading (Groq, via a Supabase Edge Function)
+- Courses, lectures, assignments, submissions, quizzes, attendance, GPA, timetable, analytics
+- Gamification: points, streaks, badges, challenges
+- Role-based access (student / lecturer / admin) enforced by Row Level Security
 
-## 🚀 Quick Setup
-
-### 1. Prerequisites
-- Flutter 3.24+ (`flutter --version`)
-- Android Studio with Redmi Note 13 USB debugging enabled
-- Supabase project — [supabase.com](https://supabase.com)
-- Gemini API key — [aistudio.google.com](https://aistudio.google.com/app/apikey)
-
-### 2. Clone & Configure
-```bash
-git clone <your-repo>
-cd studylock_v2
-
-# Copy env template
-cp .env.example .env
-# Edit .env with your real keys
+## Architecture
 ```
-
-### 3. Set up Supabase
-```bash
-# Run the SQL migration in Supabase SQL Editor
-# File: supabase/migrations/001_full_schema.sql
+Flutter app ──(anon key + user JWT)──► Supabase (Postgres + RLS, Auth, Storage)
+     └────────► Edge Function `ai-proxy` ──(GROQ_API_KEY secret)──► Groq API
 ```
+The app never contains an AI key. See [SECURITY.md](SECURITY.md).
 
-### 4. Run on PHONE
+## Setup
+
+### 1. Supabase
+1. Create a project, then run `supabase/migrations/001_full_schema.sql` and
+   `supabase/migrations/002_security_hardening.sql` in the SQL editor (in that order).
+2. Create the first admin: sign up in the app, then in the SQL editor run
+   `update public.user_roles set role = 'admin' where user_id = '<your-user-id>';`
+
+### 2. AI Edge Function (Groq)
+Get a key at https://console.groq.com, then with the [Supabase CLI](https://supabase.com/docs/guides/cli):
 ```bash
-# Enable USB Debugging on phone:
-# Settings → About Phone → tap MIUI Version 7 times → Developer Options → USB Debugging ON
+supabase login
+supabase link --project-ref <your-project-ref>
+supabase secrets set GROQ_API_KEY=<your-groq-key>
+supabase functions deploy ai-proxy
+```
+Optional secrets: `GROQ_MODEL` (default `llama-3.3-70b-versatile`), `AI_HOURLY_LIMIT` (default 30).
 
+### 3. App configuration
+```bash
+cp env.example.json env.json   # then fill in SUPABASE_URL and SUPABASE_ANON_KEY
 flutter pub get
-flutter run  # auto-detects connected device
+flutter run --dart-define-from-file=env.json
 ```
+`env.json` is git-ignored. Only public values go there.
 
-### 5. Build for Android
+## Build
 ```bash
-# Debug APK (for testing)
-flutter build apk --debug
-
-# Release APK
-flutter build apk --release --split-per-abi
-
-# App Bundle (Play Store)
-flutter build appbundle --release
+flutter build apk --release --dart-define-from-file=env.json
+flutter build web --release --dart-define-from-file=env.json
 ```
 
-### 6. Build for Web (Admin Panel)
+### Release signing (Android)
+Create `android/key.properties` (git-ignored):
+```
+storeFile=/absolute/path/to/upload-keystore.jks
+storePassword=...
+keyAlias=upload
+keyPassword=...
+```
+Without it, release builds fall back to the debug key (local testing only).
+
+## Quality
 ```bash
-flutter build web --web-renderer html --release
-# Output: build/web/ — deploy to Firebase Hosting / Vercel / Netlify
+flutter analyze
+flutter test
+```
+CI (`.github/workflows/ci.yml`) runs analyze, tests and a type-check of the Edge Function.
+
+## Project layout
+```
+lib/core        theme, router, config
+lib/data        models
+lib/providers   Riverpod state
+lib/services    AI, storage, notifications, cache, logging
+lib/features    auth, student, lecturer, admin, session, attendance, ...
+supabase/       migrations + Edge Functions
 ```
 
----
-
-## 📱 Running Admin Panel on Web
-
-The admin panel works fully in Chrome:
-
-```bash
-flutter run -d chrome --web-renderer html
-```
-
-Navigate to `/admin` — requires admin role account.
-
----
-
-## 🔐 First-Time Admin Setup
-
-Since admin self-registration is blocked (security), create the first admin manually:
-
-1. Register a new account normally (as student/lecturer)
-2. In Supabase Dashboard → Table Editor → `user_roles`
-3. Find your user row and change `role` to `admin`
-4. Sign out and sign back in
-
----
-
-## 🖼️ App Icon & Splash Screen
-
-Place your icon at `assets/images/app_icon.png` (1024×1024 PNG, no alpha channel), then:
-
-```bash
-dart run flutter_launcher_icons
-dart run flutter_native_splash:create
-```
-
----
-
-## 📁 Project Structure
-
-```
-lib/
-├── core/          → Config, Router, Theme, Constants
-├── data/          → Models, Service re-exports
-├── features/      → Screens by feature (admin, student, lecturer…)
-├── providers/     → Riverpod StateNotifiers (business logic)
-├── services/      → Gemini AI, Storage, Notifications, Realtime
-└── shared/        → Reusable widgets (AppButton, ShimmerLoader…)
-```
-
----
-
-## 🏗️ Architecture
-
-- **State**: Riverpod (StateNotifier + Provider + FutureProvider)
-- **Navigation**: GoRouter (role-based redirects)
-- **Backend**: Supabase (Auth + Database + Storage + Realtime)
-- **AI**: Google Gemini 2.0 Flash
-- **Face Detection**: ML Kit (on-device, offline)
-
----
-
-## ⚠️ Security Checklist
-
-- [ ] `.env` is in `.gitignore` ✅
-- [ ] Admin self-registration blocked ✅
-- [ ] File upload validation enabled ✅
-- [ ] Supabase RLS policies active ✅
-- [ ] Rotate API keys if ever exposed ⚠️
-
----
-
-## 📋 Roles
-
-| Role | Access |
-|---|---|
-| **Student** | Home, Courses, Sessions, Attendance, GPA, Leaderboard, AI Tutor, Timetable |
-| **Lecturer** | Create content, Mark attendance, Grade submissions, Performance stats |
-| **Admin** | All above + Analytics dashboard, User management, Course management |
-
----
-
-## 🐛 Common Issues
-
-**Camera not working on Redmi?**  
-Settings → Apps → StudyLock → Permissions → Camera → Allow
-
-**App killed during session?**  
-Settings → Apps → StudyLock → Battery → No restrictions
-
-**Notifications not showing?**  
-Settings → Notifications → StudyLock → Allow notifications
-
----
-
-*StudyLock V2 — Built with Flutter 3.44 | June 2026*
-
-ALL RIGHTS RESERVED FOR | M TULAIB KH  
-
+## License
+Proprietary — all rights reserved. See [LICENSE](LICENSE).

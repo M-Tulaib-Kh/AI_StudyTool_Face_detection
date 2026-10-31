@@ -1,35 +1,27 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+/// Build-time configuration, injected with `--dart-define-from-file=env.json`
+/// (see `env.example.json`). Only PUBLIC values belong here: the Supabase URL and
+/// anon key are designed to be public and are protected by Row Level Security.
+/// Secret keys (e.g. the Groq key) must NEVER be added to the app — they live in
+/// Supabase Edge Function secrets.
 class AppEnv {
-  static String get supabaseUrl {
-    final v = dotenv.env['SUPABASE_URL'];
-    assert(v != null && v.isNotEmpty, 'SUPABASE_URL missing from .env');
-    return v ?? '';
-  }
+  static const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
+  static const supabaseAnonKey = String.fromEnvironment('SUPABASE_ANON_KEY');
 
-  static String get supabaseAnonKey {
-    final v = dotenv.env['SUPABASE_ANON_KEY'];
-    assert(v != null && v.isNotEmpty, 'SUPABASE_ANON_KEY missing from .env');
-    return v ?? '';
-  }
-
-  static String get geminiApiKey {
-    final v = dotenv.env['GEMINI_API_KEY'];
-    assert(v != null && v.isNotEmpty, 'GEMINI_API_KEY missing from .env');
-    return v ?? '';
+  static void validate() {
+    if (supabaseUrl.isEmpty || supabaseAnonKey.isEmpty) {
+      throw StateError(
+        'Missing SUPABASE_URL / SUPABASE_ANON_KEY. Run with '
+        '--dart-define-from-file=env.json (copy env.example.json to env.json).',
+      );
+    }
   }
 }
 
 class SupabaseConfig {
   static Future<void> initialize() async {
-    await dotenv.load(fileName: '.env');
-    if (kDebugMode) {
-      assert(AppEnv.supabaseUrl.isNotEmpty, '❌ SUPABASE_URL is empty in .env');
-      assert(AppEnv.supabaseAnonKey.isNotEmpty, '❌ SUPABASE_ANON_KEY is empty in .env');
-      assert(AppEnv.geminiApiKey.isNotEmpty, '❌ GEMINI_API_KEY is empty in .env');
-    }
+    AppEnv.validate();
     await Supabase.initialize(
       url: AppEnv.supabaseUrl,
       anonKey: AppEnv.supabaseAnonKey,

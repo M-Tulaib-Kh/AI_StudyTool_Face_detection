@@ -6,7 +6,7 @@ import 'package:timezone/data/latest_all.dart' as tz;
 import 'core/config/supabase_config.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
-import 'data/services/notification_service.dart';
+import 'services/notification_service.dart';
 import 'services/logging_service.dart';
 import 'services/offline_cache_service.dart';
 import 'features/theme/theme_provider.dart';

@@ -30,7 +30,7 @@ class _AdminUsersScreenState extends ConsumerState<AdminUsersScreen> {
     try {
       final data = await SupabaseConfig.client
           .from('profiles')
-          .select('*, user_roles(role)')
+          .select('*, user_roles(role), role_requests(requested_role, status)')
           .order('created_at', ascending: false);
       if (mounted)
         setState(() {
@@ -57,6 +57,12 @@ class _AdminUsersScreenState extends ConsumerState<AdminUsersScreen> {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text('Error: $e'), backgroundColor: AppColors.danger));
     }
+  }
+
+  bool _hasPendingRequest(Map<String, dynamic> user) {
+    final r = user['role_requests'];
+    final list = r is List ? r : (r is Map ? [r] : const []);
+    return list.any((e) => e is Map && e['status'] == 'pending');
   }
 
   String _getRole(Map<String, dynamic> user) {
@@ -200,6 +206,12 @@ class _AdminUsersScreenState extends ConsumerState<AdminUsersScreen> {
                                             fontSize: 12),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis),
+                                    if (_hasPendingRequest(u))
+                                      const Text('Lecturer request pending',
+                                          style: TextStyle(
+                                              color: AppColors.accent,
+                                              fontSize: 11,
+                                              fontWeight: FontWeight.w600)),
                                   ])),
                               PopupMenuButton<String>(
                                 color: AppColors.darkCard,

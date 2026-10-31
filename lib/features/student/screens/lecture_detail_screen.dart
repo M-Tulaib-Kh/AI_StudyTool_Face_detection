@@ -8,7 +8,7 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../data/models/models.dart';
 import '../../../providers/academic_provider.dart';
-import '../../../data/services/storage_service.dart';
+import '../../../services/storage_service.dart';
 
 class LectureDetailScreen extends ConsumerStatefulWidget {
   final String lectureId;

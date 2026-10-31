@@ -9,7 +9,7 @@ import '../../../core/theme/app_theme.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/game_provider.dart';
 import '../../../providers/session_provider.dart';
-import '../../../data/services/storage_service.dart';
+import '../../../services/storage_service.dart';
 import '../../../shared/widgets/app_button.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {

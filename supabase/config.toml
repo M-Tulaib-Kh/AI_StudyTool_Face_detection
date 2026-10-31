@@ -1,0 +1,3 @@
+# Minimal Supabase CLI config. Run `supabase link --project-ref <ref>` before deploying.
+[functions.ai-proxy]
+verify_jwt = true

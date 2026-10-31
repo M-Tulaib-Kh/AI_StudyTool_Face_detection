@@ -1,5 +1,5 @@
 import '../data/models/models.dart';
-import '../services/gemini_service.dart';
+import '../services/ai_service.dart';
 
 class AIQuizService {
   static AIQuizService? _instance;
@@ -13,7 +13,7 @@ class AIQuizService {
     String difficulty = 'medium',
   }) async {
     final prompt = 'Topic: "$topic". Difficulty: $difficulty. Generate $questionCount unique MCQ questions.';
-    return GeminiService.instance.generateQuiz(
+    return AiService.instance.generateQuiz(
       subject: subject,
       prompt: prompt,
       count: questionCount,
@@ -24,7 +24,7 @@ class AIQuizService {
     required String subject,
     required List<String> weakAreas,
   }) async {
-    final result = await GeminiService.instance.generateAssignment(
+    final result = await AiService.instance.generateAssignment(
       subject: subject,
       prompt: 'Provide 5 concise study tips for weak areas: ${weakAreas.join(", ")}',
     );
@@ -34,5 +34,5 @@ class AIQuizService {
   Future<({int score, String feedback, List<Map<String, dynamic>> breakdown})> gradeQuiz({
     required List<QuizQuestion> questions,
     required Map<String, String> answers,
-  }) => GeminiService.instance.gradeQuiz(questions: questions, studentAnswers: answers);
+  }) => AiService.instance.gradeQuiz(questions: questions, studentAnswers: answers);
 }

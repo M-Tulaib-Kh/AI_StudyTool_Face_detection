@@ -6,7 +6,7 @@ import '../../../core/theme/app_theme.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/academic_provider.dart';
 import '../../../data/models/models.dart';
-import '../../../services/gemini_service.dart';
+import '../../../services/ai_service.dart';
 import '../../../shared/widgets/app_button.dart';
 
 class GradeSubmissionScreen extends ConsumerStatefulWidget {
@@ -31,12 +31,12 @@ class _GradeSubmissionScreenState extends ConsumerState<GradeSubmissionScreen> {
     }
     setState(() => _aiGrading = true);
     try {
-      final result = await GeminiService.instance.gradeSubmission(
+      final result = await AiService.instance.gradeSubmission(
         assignmentPrompt: '${assign.title}\n${assign.description}\n${assign.instructions}',
         submissionText: 'Student submitted file: ${sub.fileName}. Please evaluate based on assignment requirements.',
         totalMarks: assign.totalMarks);
       if (mounted) setState(() { _marksCtrl.text = '${result.marks}'; _feedbackCtrl.text = result.feedback; });
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('AI grading complete!'), backgroundColor: AppColors.success));
+      if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('AI grading complete!'), backgroundColor: AppColors.success));
     } catch (e) {
       if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('AI error: $e'), backgroundColor: AppColors.danger));
     } finally { if (mounted) setState(() => _aiGrading = false); }

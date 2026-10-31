@@ -94,6 +94,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       _label('I am a'),
       const SizedBox(height: 8),
+      if (_role == UserRole.lecturer) ...[
+        const Text(
+            'Lecturer accounts start as student accounts until an admin approves your request.',
+            style: TextStyle(color: AppColors.darkMuted, fontSize: 12)),
+        const SizedBox(height: 8),
+      ],
       // Only allow student and lecturer roles during public signup
       // Admin accounts must be created by existing admins only
       Row(children: [UserRole.student, UserRole.lecturer].map((r) {
