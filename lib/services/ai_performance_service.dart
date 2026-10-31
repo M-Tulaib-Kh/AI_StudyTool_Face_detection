@@ -16,7 +16,7 @@ class AIPerformanceService {
     final avgQuiz = attempts.isEmpty ? 0.0 : attempts.fold<double>(0, (s, a) =>
       s + (a.totalMarks > 0 ? a.score / a.totalMarks * 100 : 0)) / attempts.length;
 
-    final submittedOnTime = submissions.where((s) => s.status == 'submitted').length;
+    final submittedOnTime = submissions.where((s) => s.status == SubmissionStatus.submitted).length;
 
     final prompt = '''
 Analyze this student's academic performance:

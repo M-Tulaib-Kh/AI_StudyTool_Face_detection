@@ -36,7 +36,7 @@ class _GradeSubmissionScreenState extends ConsumerState<GradeSubmissionScreen> {
         submissionText: 'Student submitted file: ${sub.fileName}. Please evaluate based on assignment requirements.',
         totalMarks: assign.totalMarks);
       if (mounted) setState(() { _marksCtrl.text = '${result.marks}'; _feedbackCtrl.text = result.feedback; });
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('AI grading complete!'), backgroundColor: AppColors.success));
+      if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('AI grading complete!'), backgroundColor: AppColors.success));
     } catch (e) {
       if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('AI error: $e'), backgroundColor: AppColors.danger));
     } finally { if (mounted) setState(() => _aiGrading = false); }
