@@ -21,14 +21,14 @@ class LecturerHomeScreen extends ConsumerWidget {
         .where((s) => s.status == SubmissionStatus.submitted)
         .length;
 
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       body: RefreshIndicator(
         onRefresh: () async => ref.read(academicProvider.notifier).loadAll(),
         color: AppColors.primary,
         child: CustomScrollView(slivers: [
           SliverAppBar(
-            backgroundColor: AppColors.darkBackground,
+            backgroundColor: Colors.transparent,
             floating: true,
             elevation: 0,
             title:
@@ -116,9 +116,9 @@ class LecturerHomeScreen extends ConsumerWidget {
                 ...myCourses.map((c) => Container(
                     margin: const EdgeInsets.only(bottom: 10),
                     padding: const EdgeInsets.all(14),
-                    decoration: BoxDecoration(
+                    decoration: BoxDecoration(boxShadow: AppShadows.clay, 
                         color: AppColors.darkCard,
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(22),
                         border: Border.all(color: AppColors.darkBorder)),
                     child: Row(children: [
                       Container(
@@ -165,9 +165,9 @@ class _StatCard extends StatelessWidget {
   Widget build(BuildContext context) => Expanded(
       child: Container(
           padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(
+          decoration: BoxDecoration(boxShadow: AppShadows.clay, 
               color: AppColors.darkCard,
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(22),
               border: Border.all(color: AppColors.darkBorder)),
           child: Column(children: [
             Icon(icon, color: color, size: 22),

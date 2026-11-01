@@ -77,8 +77,8 @@ class _AssignmentDetailScreenState
         state.assignments.where((a) => a.id == widget.assignmentId).firstOrNull;
 
     if (assignment == null)
-      return Scaffold(
-          backgroundColor: AppColors.darkBackground,
+      return ClayScaffold(
+          backgroundColor: Colors.transparent,
           body: Center(
               child: Column(mainAxisSize: MainAxisSize.min, children: [
             const Icon(Icons.error_outline, color: AppColors.danger, size: 56),
@@ -98,10 +98,10 @@ class _AssignmentDetailScreenState
         : null;
     final isGraded = submission?.status == SubmissionStatus.graded;
 
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
-          backgroundColor: AppColors.darkBackground,
+          backgroundColor: Colors.transparent,
           elevation: 0,
           leading: IconButton(
               icon: const Icon(Icons.arrow_back, color: Colors.white),

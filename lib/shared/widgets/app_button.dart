@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_theme.dart';
 
-class AppButton extends StatelessWidget {
+/// Claymorphism button: puffy gradient pill with a soft glow and a press animation.
+class AppButton extends StatefulWidget {
   final String label;
   final VoidCallback? onTap;
   final VoidCallback? onPressed; // alias for onTap
@@ -22,44 +23,66 @@ class AppButton extends StatelessWidget {
   });
 
   @override
+  State<AppButton> createState() => _AppButtonState();
+}
+
+class _AppButtonState extends State<AppButton> {
+  bool _down = false;
+
+  @override
   Widget build(BuildContext context) {
-    final bg = color ?? AppColors.primary;
-    final handler = onTap ?? onPressed;
-    return SizedBox(
-      width: double.infinity,
-      height: 52,
-      child: Material(
-        color: outline ? Colors.transparent : bg,
-        borderRadius: BorderRadius.circular(14),
-        child: InkWell(
-          onTap: loading ? null : handler,
-          borderRadius: BorderRadius.circular(14),
-          child: Container(
-            decoration: outline
-                ? BoxDecoration(
-                    borderRadius: BorderRadius.circular(14),
-                    border: Border.all(color: bg, width: 1.5),
-                  )
-                : null,
-            child: Center(
-              child: loading
-                  ? SizedBox(
-                      width: 22, height: 22,
-                      child: CircularProgressIndicator(
-                          strokeWidth: 2.5,
-                          color: outline ? bg : Colors.white))
-                  : Row(mainAxisSize: MainAxisSize.min, children: [
-                      if (icon != null) ...[
-                        Icon(icon, color: outline ? bg : Colors.white, size: 18),
-                        const SizedBox(width: 8),
-                      ],
-                      Text(label,
-                          style: TextStyle(
-                              color: outline ? bg : Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w700)),
-                    ]),
+    final base = widget.color ?? AppColors.primary;
+    final handler = widget.onTap ?? widget.onPressed;
+    final enabled = handler != null && !widget.loading;
+    final fg = widget.outline ? base : Colors.white;
+
+    final decoration = widget.outline
+        ? BoxDecoration(
+            borderRadius: BorderRadius.circular(26),
+            color: AppColors.darkCard,
+            border: Border.all(color: base.withValues(alpha: 0.7), width: 1.5),
+            boxShadow: AppShadows.claySmall,
+          )
+        : BoxDecoration(
+            borderRadius: BorderRadius.circular(26),
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: widget.color == null
+                  ? AppColors.gradientColors
+                  : [Color.lerp(base, Colors.white, 0.22)!, base],
             ),
+            boxShadow: AppShadows.glow(base),
+          );
+
+    return Opacity(
+      opacity: enabled || widget.loading ? 1 : 0.5,
+      child: GestureDetector(
+        onTapDown: enabled ? (_) => setState(() => _down = true) : null,
+        onTapCancel: () => setState(() => _down = false),
+        onTapUp: (_) => setState(() => _down = false),
+        onTap: enabled ? handler : null,
+        child: AnimatedScale(
+          scale: _down ? 0.97 : 1,
+          duration: const Duration(milliseconds: 110),
+          child: Container(
+            width: double.infinity,
+            height: 54,
+            decoration: decoration,
+            alignment: Alignment.center,
+            child: widget.loading
+                ? SizedBox(
+                    width: 22,
+                    height: 22,
+                    child: CircularProgressIndicator(strokeWidth: 2.5, color: fg))
+                : Row(mainAxisSize: MainAxisSize.min, children: [
+                    if (widget.icon != null) ...[
+                      Icon(widget.icon, color: fg, size: 19),
+                      const SizedBox(width: 8),
+                    ],
+                    Text(widget.label,
+                        style: TextStyle(color: fg, fontSize: 15, fontWeight: FontWeight.w800)),
+                  ]),
           ),
         ),
       ),

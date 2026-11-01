@@ -6,8 +6,8 @@ class LoadingScreen extends StatelessWidget {
   const LoadingScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       body: Center(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           Container(

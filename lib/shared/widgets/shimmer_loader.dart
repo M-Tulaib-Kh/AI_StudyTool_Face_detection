@@ -12,7 +12,7 @@ class ShimmerCard extends StatelessWidget {
       highlightColor: AppColors.darkSecondary,
       child: Container(
         height: height, margin: const EdgeInsets.only(bottom: 12),
-        decoration: BoxDecoration(color: AppColors.darkCard, borderRadius: BorderRadius.circular(16)),
+        decoration: BoxDecoration(boxShadow: AppShadows.clay, color: AppColors.darkCard, borderRadius: BorderRadius.circular(24)),
       ),
     );
   }
@@ -40,7 +40,7 @@ class ShimmerLoader extends StatelessWidget {
       child: Container(
         height: height,
         margin: const EdgeInsets.only(bottom: 12),
-        decoration: BoxDecoration(
+        decoration: BoxDecoration(boxShadow: AppShadows.clay, 
           color: AppColors.darkCard,
           borderRadius: BorderRadius.circular(borderRadius),
         ),

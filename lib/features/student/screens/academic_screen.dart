@@ -26,10 +26,10 @@ class _AcademicScreenState extends ConsumerState<AcademicScreen> with SingleTick
   Widget build(BuildContext context) {
     final state = ref.watch(academicProvider);
     final user = ref.watch(currentUserProvider);
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
-        backgroundColor: AppColors.darkBackground, elevation: 0,
+        backgroundColor: Colors.transparent, elevation: 0,
         title: const Text('Academic', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800)),
         bottom: TabBar(
           controller: _tabs,
@@ -86,7 +86,7 @@ class _LecturesTab extends StatelessWidget {
             onTap: () => context.push('/lecture/${l.id}'),
             child: Container(
               padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(color: AppColors.darkCard, borderRadius: BorderRadius.circular(14), border: Border.all(color: AppColors.darkBorder)),
+              decoration: BoxDecoration(boxShadow: AppShadows.clay, color: AppColors.darkCard, borderRadius: BorderRadius.circular(22), border: Border.all(color: AppColors.darkBorder)),
               child: Row(children: [
                 Container(width: 48, height: 48, decoration: BoxDecoration(color: AppColors.primary.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(12)),
                   child: const Icon(Icons.library_books, color: AppColors.primary, size: 24)),
@@ -132,8 +132,8 @@ class _AssignmentsTab extends StatelessWidget {
           onTap: () => context.push('/assignment/${a.id}'),
           child: Container(
             padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              color: AppColors.darkCard, borderRadius: BorderRadius.circular(14),
+            decoration: BoxDecoration(boxShadow: AppShadows.clay, 
+              color: AppColors.darkCard, borderRadius: BorderRadius.circular(22),
               border: Border.all(color: done ? AppColors.success.withValues(alpha: 0.3) : a.isOverdue ? AppColors.danger.withValues(alpha: 0.3) : AppColors.darkBorder),
             ),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -184,8 +184,8 @@ class _QuizzesTab extends StatelessWidget {
           onTap: () => done ? context.push('/quiz-result/${attempt?.id}') : context.push('/quiz/${q.id}'),
           child: Container(
             padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              color: AppColors.darkCard, borderRadius: BorderRadius.circular(14),
+            decoration: BoxDecoration(boxShadow: AppShadows.clay, 
+              color: AppColors.darkCard, borderRadius: BorderRadius.circular(22),
               border: Border.all(color: done ? AppColors.success.withValues(alpha: 0.3) : AppColors.darkBorder),
             ),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

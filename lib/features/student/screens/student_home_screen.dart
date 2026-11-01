@@ -10,6 +10,8 @@ import '../../../providers/session_provider.dart';
 import '../../../providers/game_provider.dart';
 import '../../../data/models/models.dart';
 import '../../../shared/widgets/shimmer_loader.dart';
+import '../../../shared/widgets/hero_banner.dart';
+import '../widgets/focus_insights_card.dart';
 
 class StudentHomeScreen extends ConsumerWidget {
   const StudentHomeScreen({super.key});
@@ -95,6 +97,22 @@ class StudentHomeScreen extends ConsumerWidget {
 
           SliverToBoxAdapter(child: const SizedBox(height: 16)),
 
+          // Hero banner
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: HeroBanner(
+                title: 'Stay focused,\nlevel up every day',
+                subtitle: 'Start a session, keep your streak and earn rewards.',
+                asset: 'assets/images/hero_study.png',
+                actionLabel: 'Start focusing',
+                onTap: () => context.go('/student/session'),
+              ).animate().fadeIn(duration: 450.ms).slideY(begin: 0.06),
+            ),
+          ),
+
+          SliverToBoxAdapter(child: const SizedBox(height: 16)),
+
           // Study session CTA
           SliverToBoxAdapter(
             child: Padding(
@@ -102,6 +120,19 @@ class StudentHomeScreen extends ConsumerWidget {
               child: _SessionCta(onTap: () => context.go('/student/session'))
                   .animate()
                   .fadeIn(duration: 400.ms),
+            ),
+          ),
+
+          SliverToBoxAdapter(child: const SizedBox(height: 16)),
+
+          // Focus insights (daily goal ring, 14-day heat strip)
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: const FocusInsightsCard()
+                  .animate()
+                  .fadeIn(duration: 450.ms, delay: 80.ms)
+                  .slideY(begin: 0.06),
             ),
           ),
 
@@ -362,9 +393,9 @@ class _AssignCard extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.only(bottom: 8),
         padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
+        decoration: BoxDecoration(boxShadow: AppShadows.clay, 
           color: AppColors.darkCard,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(22),
           border: Border(left: BorderSide(color: urgency, width: 3)),
         ),
         child: Row(children: [
@@ -409,9 +440,9 @@ class _LectureCard extends StatelessWidget {
         child: Container(
           margin: const EdgeInsets.only(bottom: 8),
           padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(
+          decoration: BoxDecoration(boxShadow: AppShadows.clay, 
               color: AppColors.darkCard,
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(22),
               border: Border.all(color: AppColors.darkBorder)),
           child: Row(children: [
             Container(
@@ -451,9 +482,9 @@ class _EmptyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
+        decoration: BoxDecoration(boxShadow: AppShadows.clay, 
             color: AppColors.darkCard,
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(22),
             border: Border.all(color: AppColors.darkBorder)),
         child: Center(
             child: Text(msg,

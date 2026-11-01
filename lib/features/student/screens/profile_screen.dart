@@ -85,12 +85,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
     final user = ref.watch(currentUserProvider);
     final game = ref.watch(gameProvider);
     final session = ref.watch(sessionProvider);
-    if (user == null) return const Scaffold(backgroundColor: Color(0xFF060E1A));
+    if (user == null) return const ClayScaffold(backgroundColor: Color(0xFF060E1A));
 
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
-        backgroundColor: AppColors.darkBackground,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text('Profile',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800)),
@@ -298,9 +298,9 @@ class _StatCard extends StatelessWidget {
   Widget build(BuildContext context) => Expanded(
       child: Container(
           padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 8),
-          decoration: BoxDecoration(
+          decoration: BoxDecoration(boxShadow: AppShadows.clay, 
               color: AppColors.darkCard,
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(22),
               border: Border.all(color: AppColors.darkBorder)),
           child: Column(children: [
             Icon(icon, color: color, size: 20),
@@ -332,9 +332,9 @@ class _SettingsTile extends StatelessWidget {
       onTap: onTap,
       child: Container(
           padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
+          decoration: BoxDecoration(boxShadow: AppShadows.clay, 
               color: AppColors.darkCard,
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(22),
               border: Border.all(color: AppColors.darkBorder)),
           child: Row(children: [
             Icon(icon, color: color, size: 22),

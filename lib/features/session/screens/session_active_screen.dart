@@ -228,7 +228,7 @@ class _SessionActiveScreenState extends ConsumerState<SessionActiveScreen>
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) context.go('/student/session');
       });
-      return const Scaffold(
+      return const ClayScaffold(
           backgroundColor: Color(0xFF060E1A),
           body: Center(
               child: CircularProgressIndicator(color: Color(0xFF5B8FF9))));
@@ -240,8 +240,8 @@ class _SessionActiveScreenState extends ConsumerState<SessionActiveScreen>
           .addPostFrameCallback((_) => _endSession('completed'));
     }
 
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       body: Container(
         decoration: const BoxDecoration(
             gradient: LinearGradient(

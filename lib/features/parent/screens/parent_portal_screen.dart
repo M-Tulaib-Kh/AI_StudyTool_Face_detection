@@ -32,66 +32,21 @@ class ParentChildData {
 final parentChildProvider = FutureProvider.family
     .autoDispose<ParentChildData?, String>((ref, childEmail) async {
   try {
-    final profile = await SupabaseConfig.client
-        .from('profiles')
-        .select('id,full_name,email,department')
-        .eq('email', childEmail)
-        .single();
-    final uid = profile['id'] as String;
-
-    final results = await Future.wait([
-      SupabaseConfig.client
-          .from('game_state')
-          .select('points,streak')
-          .eq('user_id', uid)
-          .maybeSingle(),
-      SupabaseConfig.client
-          .from('attendance')
-          .select('status')
-          .eq('student_id', uid),
-      SupabaseConfig.client
-          .from('quiz_attempts')
-          .select('score,total_marks')
-          .eq('student_id', uid),
-      SupabaseConfig.client
-          .from('study_sessions')
-          .select('elapsed_seconds,valid_session')
-          .eq('user_id', uid)
-          .eq('valid_session', true),
-    ] as Iterable<Future<dynamic>>);
-
-    final game = results[0] as Map?;
-    final attendance = results[1] as List;
-    final quizzes = results[2] as List;
-    final sessions = results[3] as List;
-
-    final present = attendance
-        .where((a) => a['status'] == 'present' || a['status'] == 'late')
-        .length;
-    final attPct = attendance.isEmpty ? 0.0 : present / attendance.length * 100;
-
-    final avgQ = quizzes.isEmpty
-        ? 0.0
-        : quizzes.fold<double>(0, (s, q) {
-              final total = (q['total_marks'] as num?)?.toDouble() ?? 0;
-              final score = (q['score'] as num?)?.toDouble() ?? 0;
-              return s + (total > 0 ? score / total * 100 : 0);
-            }) /
-            quizzes.length;
-
-    final studyMin = sessions.fold<int>(
-        0, (s, sess) => s + ((sess['elapsed_seconds'] as int?) ?? 0) ~/ 60);
-
+    // Server-side aggregate (RPC): the app never reads another student's raw rows.
+    final res = await SupabaseConfig.client
+        .rpc('parent_child_summary', params: {'child_email': childEmail.trim()});
+    if (res == null) return null;
+    final m = Map<String, dynamic>.from(res as Map);
     return ParentChildData(
-      name: profile['full_name'] as String? ?? '',
+      name: m['name'] as String? ?? '',
       email: childEmail,
-      department: profile['department'] as String? ?? '',
-      points: (game?['points'] as int?) ?? 0,
-      streak: (game?['streak'] as int?) ?? 0,
-      attendancePct: attPct,
-      avgQuizScore: avgQ,
-      totalSessions: sessions.length,
-      studyMinutes: studyMin,
+      department: m['department'] as String? ?? '',
+      points: (m['points'] as num?)?.toInt() ?? 0,
+      streak: (m['streak'] as num?)?.toInt() ?? 0,
+      attendancePct: (m['attendance_pct'] as num?)?.toDouble() ?? 0,
+      avgQuizScore: (m['avg_quiz_score'] as num?)?.toDouble() ?? 0,
+      totalSessions: (m['total_sessions'] as num?)?.toInt() ?? 0,
+      studyMinutes: (m['study_minutes'] as num?)?.toInt() ?? 0,
     );
   } catch (_) {
     return null;
@@ -116,12 +71,12 @@ class _ParentPortalScreenState extends ConsumerState<ParentPortalScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: const Text('Parent Portal',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
-        backgroundColor: AppColors.darkBackground,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
@@ -131,9 +86,9 @@ class _ParentPortalScreenState extends ConsumerState<ParentPortalScreen> {
           // Search child by email
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
+            decoration: BoxDecoration(boxShadow: AppShadows.clay, 
                 color: AppColors.darkCard,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(24),
                 border: Border.all(color: AppColors.darkBorder)),
             child: Column(children: [
               const Row(children: [
@@ -321,9 +276,9 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
+        decoration: BoxDecoration(boxShadow: AppShadows.clay, 
             color: AppColors.darkCard,
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(22),
             border: Border.all(color: color.withValues(alpha: 0.2))),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -25,12 +25,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
     final isDark = ref.watch(themeModeProvider.notifier).isDark;
     final isUrdu = ref.watch(languageProvider.notifier).isUrdu;
 
-    return Scaffold(
+    return ClayScaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text(isUrdu ? 'ترتیبات' : 'Settings',
           style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
-        backgroundColor: AppColors.darkBackground,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
@@ -180,9 +180,9 @@ class _Section extends StatelessWidget {
       ),
       Container(
         margin: const EdgeInsets.symmetric(horizontal: 16),
-        decoration: BoxDecoration(
+        decoration: BoxDecoration(boxShadow: AppShadows.clay, 
           color: AppColors.darkCard,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(24),
           border: Border.all(color: AppColors.darkBorder),
         ),
         child: Column(children: children),

@@ -10,10 +10,10 @@ class AdminCoursesScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(academicProvider);
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
-        backgroundColor: AppColors.darkBackground, elevation: 0,
+        backgroundColor: Colors.transparent, elevation: 0,
         title: const Text('All Courses', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800)),
         actions: [IconButton(icon: const Icon(Icons.refresh, color: Colors.white),
           onPressed: () => ref.read(academicProvider.notifier).loadAll())],
@@ -36,7 +36,7 @@ class AdminCoursesScreen extends ConsumerWidget {
                       final quizzes = state.quizzes.where((q) => q.courseId == c.id).length;
                       return Container(
                         padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(color: AppColors.darkCard, borderRadius: BorderRadius.circular(14), border: Border.all(color: AppColors.darkBorder)),
+                        decoration: BoxDecoration(boxShadow: AppShadows.clay, color: AppColors.darkCard, borderRadius: BorderRadius.circular(22), border: Border.all(color: AppColors.darkBorder)),
                         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                           Row(children: [
                             Container(width: 44, height: 44,

@@ -50,10 +50,10 @@ class _ManageScreenState extends ConsumerState<ManageScreen>
         .where((s) => assignIds.contains(s.assignmentId))
         .toList();
 
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
-        backgroundColor: AppColors.darkBackground,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text('Manage',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800)),
@@ -200,7 +200,7 @@ class _PdfViewer extends StatelessWidget {
   final String url, title;
   const _PdfViewer({required this.url, required this.title});
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context) => ClayScaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
           backgroundColor: AppColors.darkCard,
@@ -328,9 +328,9 @@ class _Card extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         padding: const EdgeInsets.all(14),
-        decoration: BoxDecoration(
+        decoration: BoxDecoration(boxShadow: AppShadows.clay, 
             color: AppColors.darkCard,
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(22),
             border: Border.all(color: AppColors.darkBorder)),
         child: Row(children: [
           Container(

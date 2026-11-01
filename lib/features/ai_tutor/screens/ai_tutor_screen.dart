@@ -76,8 +76,8 @@ class _AITutorScreenState extends ConsumerState<AITutorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: Row(children: [
           Container(
@@ -91,7 +91,7 @@ class _AITutorScreenState extends ConsumerState<AITutorScreen> {
             Text('Powered by AI', style: TextStyle(color: AppColors.darkMuted, fontSize: 11)),
           ]),
         ]),
-        backgroundColor: AppColors.darkBackground,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
         actions: [
@@ -204,7 +204,7 @@ class _MessageBubble extends StatelessWidget {
           Flexible(
             child: Container(
               padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
+              decoration: BoxDecoration(boxShadow: AppShadows.clay, 
                 color: message.isUser ? AppColors.primary : AppColors.darkCard,
                 borderRadius: BorderRadius.only(
                   topLeft: const Radius.circular(16),
@@ -243,7 +243,7 @@ class _TypingBubbleState extends State<_TypingBubble> with SingleTickerProviderS
       const SizedBox(width: 8),
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        decoration: BoxDecoration(color: AppColors.darkCard, borderRadius: BorderRadius.circular(16), border: Border.all(color: AppColors.darkBorder)),
+        decoration: BoxDecoration(boxShadow: AppShadows.clay, color: AppColors.darkCard, borderRadius: BorderRadius.circular(24), border: Border.all(color: AppColors.darkBorder)),
         child: Row(mainAxisSize: MainAxisSize.min, children: List.generate(3, (i) => AnimatedBuilder(
           animation: _anim,
           builder: (_, __) => Container(

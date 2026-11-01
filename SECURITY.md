@@ -17,6 +17,7 @@ Please email the maintainer privately (see the GitHub profile) instead of openin
 - **Camera:** frames are analysed on-device with ML Kit; they are not uploaded.
 
 ## Known limitations (be honest about them)
+0. **Parent portal** looks up a child by e-mail (`parent_child_summary`, aggregates only). Anyone signed in who knows a student's e-mail can see those aggregates. Replace with an explicit parent-child link that the student approves.
 1. **Quiz answer keys are readable by students.** `quizzes.questions` contains `correctAnswer`
    and every authenticated user may `select` quizzes. Recommended fix: store keys in a
    lecturer-only table and grade through a `security definer` function.

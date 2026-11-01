@@ -96,8 +96,8 @@ class _QuizAttemptScreenState extends ConsumerState<QuizAttemptScreen> {
     final state = ref.watch(academicProvider);
     final quiz = state.quizzes.where((q) => q.id == widget.quizId).firstOrNull;
     if (quiz == null || quiz.questions.isEmpty)
-      return Scaffold(
-          backgroundColor: AppColors.darkBackground,
+      return ClayScaffold(
+          backgroundColor: Colors.transparent,
           body: const Center(
               child: Text('Quiz not found',
                   style: TextStyle(color: Colors.white))));
@@ -107,8 +107,8 @@ class _QuizAttemptScreenState extends ConsumerState<QuizAttemptScreen> {
     final total = quiz.questions.length;
     final urgent = _remaining < 60;
 
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: Column(children: [
           // Header bar
@@ -135,11 +135,11 @@ class _QuizAttemptScreenState extends ConsumerState<QuizAttemptScreen> {
               Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
+                decoration: BoxDecoration(boxShadow: AppShadows.clay, 
                     color: urgent
                         ? AppColors.danger.withValues(alpha: 0.2)
                         : AppColors.darkCard,
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(28),
                     border: Border.all(
                         color:
                             urgent ? AppColors.danger : AppColors.darkBorder)),
@@ -194,11 +194,11 @@ class _QuizAttemptScreenState extends ConsumerState<QuizAttemptScreen> {
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 12),
                     padding: const EdgeInsets.all(14),
-                    decoration: BoxDecoration(
+                    decoration: BoxDecoration(boxShadow: AppShadows.clay, 
                         color: selected
                             ? AppColors.primary.withValues(alpha: 0.2)
                             : AppColors.darkCard,
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(22),
                         border: Border.all(
                             color: selected
                                 ? AppColors.primary

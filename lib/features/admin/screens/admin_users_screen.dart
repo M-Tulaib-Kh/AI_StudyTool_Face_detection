@@ -86,10 +86,10 @@ class _AdminUsersScreenState extends ConsumerState<AdminUsersScreen> {
       return true;
     }).toList();
 
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
-        backgroundColor: AppColors.darkBackground,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         title: const Text('Users',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800)),
@@ -125,9 +125,9 @@ class _AdminUsersScreenState extends ConsumerState<AdminUsersScreen> {
                   margin: const EdgeInsets.only(right: 8),
                   padding:
                       const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-                  decoration: BoxDecoration(
+                  decoration: BoxDecoration(boxShadow: AppShadows.clay, 
                       color: sel ? AppColors.primary : AppColors.darkCard,
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(28),
                       border: Border.all(
                           color:
                               sel ? AppColors.primary : AppColors.darkBorder)),
@@ -168,9 +168,9 @@ class _AdminUsersScreenState extends ConsumerState<AdminUsersScreen> {
                                   : AppColors.success;
                           return Container(
                             padding: const EdgeInsets.all(14),
-                            decoration: BoxDecoration(
+                            decoration: BoxDecoration(boxShadow: AppShadows.clay, 
                                 color: AppColors.darkCard,
-                                borderRadius: BorderRadius.circular(14),
+                                borderRadius: BorderRadius.circular(22),
                                 border:
                                     Border.all(color: AppColors.darkBorder)),
                             child: Row(children: [

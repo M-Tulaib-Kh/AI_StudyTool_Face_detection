@@ -1,14 +1,53 @@
 -- StudyLock 002 — security hardening, AI usage limits, role requests, attendance roster.
 -- Safe to re-run (idempotent). Run in the Supabase SQL editor AFTER 001_full_schema.sql.
+-- Works with schemas where user_roles.role / has_role() / my_role() use TEXT.
+
+-- ── 0. Pre-flight: abort with a clear message (and change nothing) if the schema differs ──
+do $$
+declare
+  req text[][] := array[
+    ['user_roles','user_id'],['user_roles','role'],
+    ['profiles','id'],['profiles','email'],['profiles','full_name'],
+    ['quizzes','id'],['quizzes','questions'],
+    ['quiz_attempts','quiz_id'],['quiz_attempts','answers'],['quiz_attempts','score'],['quiz_attempts','total_marks'],
+    ['assignments','id'],['assignments','deadline'],
+    ['submissions','assignment_id'],['submissions','marks_obtained'],['submissions','feedback'],
+    ['submissions','graded_by'],['submissions','graded_at'],['submissions','submitted_at'],['submissions','status'],
+    ['login_events','user_id'],['login_events','email'],['login_events','name'],['login_events','role'],
+    ['attendance','course_id'],['attendance','student_id'],
+    ['enrollments','course_id'],['enrollments','student_id'],
+    ['courses','id'],['courses','lecturer_id'],
+    ['notifications','user_id'],
+    ['lectures','id'],['lectures','views'],
+    ['game_state','points'],['game_state','streak'],['game_state','longest_streak'],
+    ['study_sessions','elapsed_seconds'],['study_sessions','violations'],['study_sessions','planned_duration_seconds']
+  ];
+  missing text := '';
+  i int;
+begin
+  for i in 1 .. array_length(req, 1) loop
+    if not exists (select 1 from information_schema.columns
+                    where table_schema = 'public' and table_name = req[i][1] and column_name = req[i][2]) then
+      missing := missing || req[i][1] || '.' || req[i][2] || ', ';
+    end if;
+  end loop;
+  if not exists (select 1 from information_schema.columns
+                  where table_schema='public' and table_name='quizzes' and column_name='questions' and data_type='jsonb') then
+    missing := missing || 'quizzes.questions(jsonb), ';
+  end if;
+  if missing <> '' then
+    raise exception 'Schema mismatch - missing: %', missing;
+  end if;
+end $$;
 
 -- ── 1. Harden SECURITY DEFINER functions (fixed search_path, no anon access) ──
-create or replace function public.has_role(uid uuid, r user_role)
+create or replace function public.has_role(uid uuid, r text)
 returns boolean language sql security definer stable set search_path = public as $$
   select exists(select 1 from public.user_roles where user_id = uid and role = r);
 $$;
 
 create or replace function public.my_role()
-returns user_role language sql security definer stable set search_path = public as $$
+returns text language sql security definer stable set search_path = public as $$
   select role from public.user_roles where user_id = auth.uid() limit 1;
 $$;
 
@@ -17,10 +56,10 @@ returns void language sql security definer set search_path = public as $$
   update public.lectures set views = views + 1 where id = lecture_id;
 $$;
 
-revoke execute on function public.has_role(uuid, user_role) from public, anon;
+revoke execute on function public.has_role(uuid, text) from public, anon;
 revoke execute on function public.my_role() from public, anon;
 revoke execute on function public.increment_lecture_views(uuid) from public, anon;
-grant execute on function public.has_role(uuid, user_role) to authenticated, service_role;
+grant execute on function public.has_role(uuid, text) to authenticated, service_role;
 grant execute on function public.my_role() to authenticated, service_role;
 grant execute on function public.increment_lecture_views(uuid) to authenticated, service_role;
 
@@ -37,8 +76,8 @@ alter table public.ai_usage enable row level security;  -- no policies: service 
 -- ── 3. Lecturer role requests (clients can never grant themselves a role) ──
 create table if not exists public.role_requests (
   id             uuid primary key default gen_random_uuid(),
-  user_id        uuid not null references public.profiles(id) on delete cascade,
-  requested_role user_role not null check (requested_role = 'lecturer'),
+  user_id        uuid not null references public.profiles(id) on delete cascade deferrable initially deferred,
+  requested_role text not null check (requested_role = 'lecturer'),
   status         text not null default 'pending' check (status in ('pending','approved','rejected')),
   created_at     timestamptz not null default now(),
   unique(user_id)
@@ -51,38 +90,20 @@ drop policy if exists "rolereq_admin" on public.role_requests;
 create policy "rolereq_admin" on public.role_requests for update
   using (public.has_role(auth.uid(), 'admin'));
 
--- New users: always 'student'. A 'lecturer' signup only creates a PENDING request.
-create or replace function public.handle_new_user()
+-- Lecturer signups only create a PENDING request. We add a separate trigger so your
+-- existing handle_new_user() (profile, role, game_state) is left untouched.
+create or replace function public.create_role_request_on_signup()
 returns trigger language plpgsql security definer set search_path = public as $$
 begin
-  insert into public.profiles(id, email, full_name, created_at, updated_at)
-  values(new.id, new.email,
-    coalesce(new.raw_user_meta_data->>'full_name', split_part(new.email,'@',1)),
-    now(), now());
-
-  insert into public.user_roles(user_id, role) values(new.id, 'student');
-
   if new.raw_user_meta_data->>'requested_role' = 'lecturer' then
     insert into public.role_requests(user_id, requested_role) values(new.id, 'lecturer')
     on conflict (user_id) do nothing;
   end if;
-
-  insert into public.game_state(user_id, points, streak, badges, challenges)
-  values(new.id, 0, 0,
-    '[{"id":"first_session","name":"First Step","description":"Complete your first study session","icon":"award","unlocked":false},
-      {"id":"streak_3","name":"On a Roll","description":"Maintain a 3-day streak","icon":"flame","unlocked":false},
-      {"id":"streak_7","name":"Week Warrior","description":"7-day streak","icon":"flame","unlocked":false},
-      {"id":"hours_10","name":"Dedicated","description":"Study 10 hours total","icon":"book","unlocked":false},
-      {"id":"hours_50","name":"Scholar","description":"Study 50 hours total","icon":"library","unlocked":false},
-      {"id":"no_violations","name":"Laser Focus","description":"Session with zero violations","icon":"eye","unlocked":false},
-      {"id":"long_session","name":"Deep Work","description":"Complete a 2-hour session","icon":"time","unlocked":false},
-      {"id":"early_bird","name":"Early Bird","description":"Study before 8am","icon":"sunny","unlocked":false}]'::jsonb,
-    '[{"id":"daily_1h","title":"Daily Focus","description":"Study for 1 hour today","target":3600,"current":0,"unit":"seconds","reward":50,"completed":false},
-      {"id":"week_5h","title":"Weekly Goal","description":"5 hours this week","target":18000,"current":0,"unit":"seconds","reward":200,"completed":false},
-      {"id":"sessions_5","title":"Session Streak","description":"Complete 5 sessions","target":5,"current":0,"unit":"sessions","reward":100,"completed":false}]'::jsonb
-  );
   return new;
 end;$$;
+drop trigger if exists z_role_request_on_signup on auth.users;
+create trigger z_role_request_on_signup after insert on auth.users
+  for each row execute procedure public.create_role_request_on_signup();
 
 -- When an admin sets the requested role, mark the request approved.
 create or replace function public.sync_role_request()

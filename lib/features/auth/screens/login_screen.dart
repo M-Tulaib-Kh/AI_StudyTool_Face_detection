@@ -34,8 +34,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final loading = ref.watch(authProvider).isLoading;
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -43,12 +43,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             key: _form,
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               const SizedBox(height: 40),
-              Container(width: 56, height: 56,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(colors: [AppColors.primary, AppColors.gradientEnd]),
-                  borderRadius: BorderRadius.circular(16)),
-                child: const Icon(Icons.lock_outline, color: Colors.white, size: 28),
-              ).animate().scale(duration: 500.ms, curve: Curves.elasticOut),
+              Center(
+                child: Image.asset('assets/images/hero_login.png',
+                    height: 170,
+                    errorBuilder: (_, __, ___) => const SizedBox(height: 170)),
+              ).animate().scale(duration: 500.ms, curve: Curves.easeOutBack),
               const SizedBox(height: 24),
               const Text('Welcome back', style: TextStyle(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w800))
                   .animate().fadeIn(delay: 100.ms).slideX(begin: -0.2),
