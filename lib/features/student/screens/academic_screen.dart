@@ -45,10 +45,10 @@ class _AcademicScreenState extends ConsumerState<AcademicScreen> with SingleTick
           child: TextField(
             onChanged: (v) => setState(() => _search = v.toLowerCase()),
             style: const TextStyle(color: Colors.white),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Search...',
-              prefixIcon: const Icon(Icons.search, color: AppColors.darkMuted, size: 20),
-              contentPadding: const EdgeInsets.symmetric(vertical: 10),
+              prefixIcon: Icon(Icons.search, color: AppColors.darkMuted, size: 20),
+              contentPadding: EdgeInsets.symmetric(vertical: 10),
             ),
           ),
         ),
@@ -139,11 +139,11 @@ class _AssignmentsTab extends StatelessWidget {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
                 Expanded(child: Text(a.title, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600))),
-                if (graded) _Badge('Graded', AppColors.success)
-                else if (done) _Badge('Submitted', AppColors.accent)
-                else if (a.isOverdue) _Badge('Overdue', AppColors.danger)
-                else if (days <= 2) _Badge('Due soon', AppColors.warning)
-                else _Badge('Pending', AppColors.darkMuted),
+                if (graded) const _Badge('Graded', AppColors.success)
+                else if (done) const _Badge('Submitted', AppColors.accent)
+                else if (a.isOverdue) const _Badge('Overdue', AppColors.danger)
+                else if (days <= 2) const _Badge('Due soon', AppColors.warning)
+                else const _Badge('Pending', AppColors.darkMuted),
               ]),
               const SizedBox(height: 6),
               Row(children: [

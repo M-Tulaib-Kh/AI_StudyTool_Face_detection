@@ -137,9 +137,10 @@ class StorageService {
     required String fileName,
     void Function(double)? onProgress,
   }) async {
-    if (kIsWeb)
+    if (kIsWeb) {
       throw UnsupportedError(
           'Download not supported on web — use url_launcher instead.');
+    }
     final dir = await getApplicationDocumentsDirectory();
     final savePath = '${dir.path}/$fileName';
     await _dio.download(

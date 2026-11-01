@@ -55,17 +55,19 @@ class _AssignmentDetailScreenState
             backgroundColor: AppColors.success));
       }
     } catch (e) {
-      if (mounted)
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content:
                 Text('Upload failed: ${e.toString().split(':').last.trim()}'),
             backgroundColor: AppColors.danger));
+      }
     } finally {
-      if (mounted)
+      if (mounted) {
         setState(() {
           _uploading = false;
           _uploadProgress = 0;
         });
+      }
     }
   }
 
@@ -76,7 +78,7 @@ class _AssignmentDetailScreenState
     final assignment =
         state.assignments.where((a) => a.id == widget.assignmentId).firstOrNull;
 
-    if (assignment == null)
+    if (assignment == null) {
       return ClayScaffold(
           backgroundColor: Colors.transparent,
           body: Center(
@@ -89,6 +91,7 @@ class _AssignmentDetailScreenState
             ElevatedButton(
                 onPressed: () => context.pop(), child: const Text('Go Back')),
           ])));
+    }
 
     final submission = user != null
         ? state.submissions

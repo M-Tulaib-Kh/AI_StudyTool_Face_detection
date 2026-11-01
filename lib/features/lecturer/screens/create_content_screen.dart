@@ -46,7 +46,9 @@ class _CreateContentScreenState extends ConsumerState<CreateContentScreen> {
       _quizCount,
       _duration,
       _totalMarks
-    ]) c.dispose();
+    ]) {
+      c.dispose();
+    }
     super.dispose();
   }
 
@@ -79,15 +81,17 @@ class _CreateContentScreenState extends ConsumerState<CreateContentScreen> {
         _uploadedFileUrl = result.fileUrl;
         _uploadedFileName = file.name;
       });
-      if (mounted)
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text('File uploaded!'),
             backgroundColor: AppColors.success));
+      }
     } catch (e) {
-      if (mounted)
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text('Upload failed: $e'),
             backgroundColor: AppColors.danger));
+      }
       setState(() {
         _uploadedFileUrl = null;
         _uploadedFileName = null;
@@ -127,14 +131,16 @@ class _CreateContentScreenState extends ConsumerState<CreateContentScreen> {
           _generatedQuestions = qs;
         }
       }
-      if (mounted)
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text('AI generated content!'),
             backgroundColor: AppColors.success));
+      }
     } catch (e) {
-      if (mounted)
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text('AI error: $e'), backgroundColor: AppColors.danger));
+      }
     } finally {
       if (mounted) setState(() => _aiGenerating = false);
     }
@@ -208,9 +214,10 @@ class _CreateContentScreenState extends ConsumerState<CreateContentScreen> {
         context.pop();
       }
     } catch (e) {
-      if (mounted)
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text('Error: $e'), backgroundColor: AppColors.danger));
+      }
     } finally {
       if (mounted) setState(() => _loading = false);
     }

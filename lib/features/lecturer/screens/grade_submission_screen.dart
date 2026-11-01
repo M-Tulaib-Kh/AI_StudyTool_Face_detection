@@ -50,8 +50,10 @@ class _GradeSubmissionScreenState extends ConsumerState<GradeSubmissionScreen> {
   Widget build(BuildContext context) {
     final state = ref.watch(academicProvider);
     final sub = state.submissions.where((s) => s.id == widget.submissionId).firstOrNull;
-    if (sub == null) return ClayScaffold(backgroundColor: Colors.transparent,
-      body: const Center(child: Text('Submission not found', style: TextStyle(color: Colors.white))));
+    if (sub == null) {
+      return const ClayScaffold(backgroundColor: Colors.transparent,
+      body: Center(child: Text('Submission not found', style: TextStyle(color: Colors.white))));
+    }
     final assign = state.assignments.where((a) => a.id == sub.assignmentId).firstOrNull;
     final isGraded = sub.status == SubmissionStatus.graded;
     if (isGraded && _marksCtrl.text.isEmpty) { _marksCtrl.text = '${sub.marksObtained ?? 0}'; _feedbackCtrl.text = sub.feedback ?? ''; }

@@ -160,7 +160,7 @@ class _TimetableScreenState extends ConsumerState<TimetableScreen> {
                               color: AppColors.darkSecondary,
                               borderRadius: BorderRadius.circular(10),
                               border: Border.all(color: AppColors.darkBorder)),
-                          child: Text('${startT.format(ctx)}',
+                          child: Text(startT.format(ctx),
                               style: const TextStyle(color: Colors.white))),
                     )),
                     const Padding(
@@ -180,7 +180,7 @@ class _TimetableScreenState extends ConsumerState<TimetableScreen> {
                               color: AppColors.darkSecondary,
                               borderRadius: BorderRadius.circular(10),
                               border: Border.all(color: AppColors.darkBorder)),
-                          child: Text('${endT.format(ctx)}',
+                          child: Text(endT.format(ctx),
                               style: const TextStyle(color: Colors.white))),
                     )),
                   ]),
@@ -231,10 +231,11 @@ class _TimetableScreenState extends ConsumerState<TimetableScreen> {
                         if (ctx.mounted) Navigator.pop(ctx);
                         ref.invalidate(timetableProvider);
                       } catch (e) {
-                        if (ctx.mounted)
+                        if (ctx.mounted) {
                           ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
                               content: Text('Error: $e'),
                               backgroundColor: AppColors.danger));
+                        }
                       }
                     },
                     child: const Text('Add'),
@@ -398,12 +399,12 @@ class _TimetableScreenState extends ConsumerState<TimetableScreen> {
                         Column(
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              Text('${e.startTime.format(context)}',
+                              Text(e.startTime.format(context),
                                   style: TextStyle(
                                       color: color,
                                       fontWeight: FontWeight.w700,
                                       fontSize: 13)),
-                              Text('${e.endTime.format(context)}',
+                              Text(e.endTime.format(context),
                                   style: const TextStyle(
                                       color: AppColors.darkMuted,
                                       fontSize: 12)),

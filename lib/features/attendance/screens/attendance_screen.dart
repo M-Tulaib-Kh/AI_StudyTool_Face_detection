@@ -54,7 +54,7 @@ class AttendanceScreen extends ConsumerWidget {
                           if (summaries.isEmpty)
                             _EmptyState()
                           else ...[
-                            Align(
+                            const Align(
                               alignment: Alignment.centerLeft,
                               child: Text('By Subject', style: TextStyle(
                                 color: AppColors.darkForeground, fontSize: 16, fontWeight: FontWeight.w700)),
@@ -127,7 +127,7 @@ class _OverallCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 Text(
                   percentage < 75 ? '⚠️ Min 75% required for exams' : '✅ Eligible for exams',
-                  style: TextStyle(color: AppColors.darkMuted, fontSize: 12),
+                  style: const TextStyle(color: AppColors.darkMuted, fontSize: 12),
                 ),
               ],
             ),
@@ -224,14 +224,14 @@ class _StatusChip extends StatelessWidget {
 class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 40),
+        padding: EdgeInsets.symmetric(vertical: 40),
         child: Column(
           children: [
             Icon(Icons.event_note_outlined, size: 56, color: AppColors.darkMuted),
-            const SizedBox(height: 12),
-            const Text('No attendance records yet', style: TextStyle(color: AppColors.darkMuted)),
+            SizedBox(height: 12),
+            Text('No attendance records yet', style: TextStyle(color: AppColors.darkMuted)),
           ],
         ),
       ),

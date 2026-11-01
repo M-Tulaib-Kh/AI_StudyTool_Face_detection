@@ -81,7 +81,9 @@ class _SessionActiveScreenState extends ConsumerState<SessionActiveScreen>
   Future<void> _runFaceDetection() async {
     if (_isDetecting ||
         _cameraController == null ||
-        !_cameraController!.value.isInitialized) return;
+        !_cameraController!.value.isInitialized) {
+      return;
+    }
     _isDetecting = true;
     String? tempPath;
     try {
@@ -122,7 +124,9 @@ class _SessionActiveScreenState extends ConsumerState<SessionActiveScreen>
     final now = DateTime.now();
     if (_lastViolationAt != null &&
         now.difference(_lastViolationAt!).inSeconds <
-            AppConstants.violationCooldownSeconds) return;
+            AppConstants.violationCooldownSeconds) {
+      return;
+    }
     _lastViolationAt = now;
 
     ref.read(sessionProvider.notifier).recordViolation();

@@ -32,11 +32,12 @@ class _AdminUsersScreenState extends ConsumerState<AdminUsersScreen> {
           .from('profiles')
           .select('*, user_roles(role), role_requests(requested_role, status)')
           .order('created_at', ascending: false);
-      if (mounted)
+      if (mounted) {
         setState(() {
           _users = (data as List).cast<Map<String, dynamic>>();
           _loading = false;
         });
+      }
     } catch (_) {
       if (mounted) setState(() => _loading = false);
     }
@@ -48,14 +49,16 @@ class _AdminUsersScreenState extends ConsumerState<AdminUsersScreen> {
           .from('user_roles')
           .update({'role': newRole}).eq('user_id', userId);
       await _loadUsers();
-      if (mounted)
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text('Role updated to $newRole'),
             backgroundColor: AppColors.success));
+      }
     } catch (e) {
-      if (mounted)
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text('Error: $e'), backgroundColor: AppColors.danger));
+      }
     }
   }
 
@@ -67,8 +70,9 @@ class _AdminUsersScreenState extends ConsumerState<AdminUsersScreen> {
 
   String _getRole(Map<String, dynamic> user) {
     final roles = user['user_roles'];
-    if (roles is List && roles.isNotEmpty)
+    if (roles is List && roles.isNotEmpty) {
       return roles.first['role'] as String? ?? 'student';
+    }
     if (roles is Map) return roles['role'] as String? ?? 'student';
     return 'student';
   }
@@ -82,7 +86,9 @@ class _AdminUsersScreenState extends ConsumerState<AdminUsersScreen> {
       if (_filter != 'all' && role != _filter) return false;
       if (_search.isNotEmpty &&
           !name.contains(_search) &&
-          !email.contains(_search)) return false;
+          !email.contains(_search)) {
+        return false;
+      }
       return true;
     }).toList();
 

@@ -39,12 +39,13 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
           .from('profiles')
           .select('id')
           .count(CountOption.exact);
-      if (mounted)
+      if (mounted) {
         setState(() {
           _loginEvents = (eventsData as List).cast<Map<String, dynamic>>();
           _totalUsers = usersData.count;
           _loadingEvents = false;
         });
+      }
     } catch (_) {
       if (mounted) setState(() => _loadingEvents = false);
     }

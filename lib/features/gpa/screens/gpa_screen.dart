@@ -67,12 +67,12 @@ class _GPAContent extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    Text('CGPA', style: const TextStyle(color: AppColors.darkMuted, fontSize: 13, fontWeight: FontWeight.w600)),
+                    const Text('CGPA', style: TextStyle(color: AppColors.darkMuted, fontSize: 13, fontWeight: FontWeight.w600)),
                     const SizedBox(height: 8),
                     Text(cgpa.toStringAsFixed(2), style: TextStyle(
                       color: cgpaColor, fontSize: 56, fontWeight: FontWeight.w900)),
                     const SizedBox(height: 4),
-                    Text('/ 4.00', style: const TextStyle(color: AppColors.darkMuted, fontSize: 14)),
+                    const Text('/ 4.00', style: TextStyle(color: AppColors.darkMuted, fontSize: 14)),
                     const SizedBox(height: 12),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
@@ -135,7 +135,7 @@ class _GPAChart extends StatelessWidget {
         )],
       )).toList(),
       maxY: 4,
-      gridData: FlGridData(show: false),
+      gridData: const FlGridData(show: false),
       borderData: FlBorderData(show: false),
       titlesData: FlTitlesData(
         leftTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
@@ -170,9 +170,9 @@ class _SemesterCard extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppColors.darkSecondary,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
             ),
             child: Row(
               children: [

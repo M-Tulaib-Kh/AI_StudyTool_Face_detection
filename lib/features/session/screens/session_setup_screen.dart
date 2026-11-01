@@ -25,8 +25,10 @@ class _SessionSetupScreenState extends ConsumerState<SessionSetupScreen> {
     if (_cameraEnabled) {
       final status = await Permission.camera.request();
       if (!status.isGranted) {
-        if (mounted) ScaffoldMessenger.of(context).showSnackBar(
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Camera permission required for AI monitoring'), backgroundColor: AppColors.warning));
+        }
         setState(() => _cameraEnabled = false);
         return;
       }
@@ -40,8 +42,10 @@ class _SessionSetupScreenState extends ConsumerState<SessionSetupScreen> {
       );
       if (mounted) context.go('/session-active');
     } catch (e) {
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to start: $e'), backgroundColor: AppColors.danger));
+      }
     } finally {
       if (mounted) setState(() => _loading = false);
     }

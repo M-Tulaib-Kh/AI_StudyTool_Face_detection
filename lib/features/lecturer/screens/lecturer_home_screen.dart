@@ -108,9 +108,9 @@ class LecturerHomeScreen extends ConsumerWidget {
               if (state.isLoading)
                 const ShimmerList(count: 2)
               else if (myCourses.isEmpty)
-                Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    child: const Text('No courses yet. Create your first!',
+                const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    child: Text('No courses yet. Create your first!',
                         style: TextStyle(color: AppColors.darkMuted)))
               else
                 ...myCourses.map((c) => Container(

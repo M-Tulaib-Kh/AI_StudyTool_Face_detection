@@ -154,10 +154,11 @@ class _ChildReport extends ConsumerWidget {
           child: Text('Error: $e',
               style: const TextStyle(color: AppColors.danger))),
       data: (data) {
-        if (data == null)
+        if (data == null) {
           return const Center(
               child: Text('Student not found with this email.',
                   style: TextStyle(color: AppColors.darkMuted)));
+        }
         return SingleChildScrollView(
             child: Column(children: [
           // Student header

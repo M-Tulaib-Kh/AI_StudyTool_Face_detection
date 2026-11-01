@@ -44,11 +44,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         'full_name': _nameCtrl.text.trim(),
         'department': _deptCtrl.text.trim(),
       });
-      if (mounted)
+      if (mounted) {
         setState(() {
           _editing = false;
           _saving = false;
         });
+      }
     } catch (e) {
       if (mounted) {
         setState(() => _saving = false);
@@ -69,14 +70,16 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       await ref
           .read(authProvider.notifier)
           .updateProfile({'avatar_url': result.fileUrl});
-      if (mounted)
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
             content: Text('Avatar updated!'),
             backgroundColor: AppColors.success));
+      }
     } catch (e) {
-      if (mounted)
+      if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('$e'), backgroundColor: AppColors.danger));
+      }
     }
   }
 

@@ -38,8 +38,9 @@ class _QuizAttemptScreenState extends ConsumerState<QuizAttemptScreen> {
           if (_remaining <= 0) {
             _timer?.cancel();
             _submit();
-          } else
+          } else {
             setState(() => _remaining--);
+          }
         });
       }
     });
@@ -95,12 +96,13 @@ class _QuizAttemptScreenState extends ConsumerState<QuizAttemptScreen> {
   Widget build(BuildContext context) {
     final state = ref.watch(academicProvider);
     final quiz = state.quizzes.where((q) => q.id == widget.quizId).firstOrNull;
-    if (quiz == null || quiz.questions.isEmpty)
-      return ClayScaffold(
+    if (quiz == null || quiz.questions.isEmpty) {
+      return const ClayScaffold(
           backgroundColor: Colors.transparent,
-          body: const Center(
+          body: Center(
               child: Text('Quiz not found',
                   style: TextStyle(color: Colors.white))));
+    }
 
     final q = quiz.questions[_current];
     final answered = _answers.length;

@@ -14,12 +14,14 @@ class QuizResultScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(academicProvider);
     final attempt = state.attempts.where((a) => a.id == attemptId).firstOrNull;
-    if (attempt == null) return ClayScaffold(backgroundColor: Colors.transparent,
+    if (attempt == null) {
+      return ClayScaffold(backgroundColor: Colors.transparent,
       body: Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
         const Text('Result not found', style: TextStyle(color: Colors.white)),
         const SizedBox(height: 16),
         ElevatedButton(onPressed: () => context.go('/student/academic'), child: const Text('Back')),
       ])));
+    }
 
     final quiz = state.quizzes.where((q) => q.id == attempt.quizId).firstOrNull;
     final pct = attempt.totalMarks > 0 ? attempt.score / attempt.totalMarks : 0.0;
@@ -96,7 +98,7 @@ class QuizResultScreen extends ConsumerWidget {
                         style: const TextStyle(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600), maxLines: 2, overflow: TextOverflow.ellipsis)),
                     ]),
                     const SizedBox(height: 6),
-                    Text('Your answer: ${answered != null ? '(${answered}) ${q.optionText(answered)}' : 'Not answered'}',
+                    Text('Your answer: ${answered != null ? '($answered) ${q.optionText(answered)}' : 'Not answered'}',
                       style: TextStyle(color: correct ? AppColors.success : AppColors.danger, fontSize: 12)),
                     if (!correct) Text('Correct: (${q.correctAnswer}) ${q.optionText(q.correctAnswer)}',
                       style: const TextStyle(color: AppColors.success, fontSize: 12)),

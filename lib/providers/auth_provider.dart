@@ -170,10 +170,12 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   String _friendly(Object e) {
     final m = e.toString().toLowerCase();
-    if (m.contains('network') || m.contains('socket'))
+    if (m.contains('network') || m.contains('socket')) {
       return 'No internet connection.';
-    if (m.contains('invalid') || m.contains('credentials'))
+    }
+    if (m.contains('invalid') || m.contains('credentials')) {
       return 'Invalid email or password.';
+    }
     return 'Something went wrong. Please try again.';
   }
 }

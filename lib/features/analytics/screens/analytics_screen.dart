@@ -37,7 +37,7 @@ class AnalyticsScreen extends ConsumerWidget {
                     sliver: SliverList(
                       delegate: SliverChildListDelegate([
                         // Summary stats grid
-                        _SectionTitle('Platform Overview'),
+                        const _SectionTitle('Platform Overview'),
                         const SizedBox(height: 12),
                         GridView.count(
                           crossAxisCount: 2,
@@ -57,19 +57,19 @@ class AnalyticsScreen extends ConsumerWidget {
                         ),
                         const SizedBox(height: 24),
                         // Avg quiz score
-                        _SectionTitle('Average Quiz Score'),
+                        const _SectionTitle('Average Quiz Score'),
                         const SizedBox(height: 12),
                         _AvgScoreCard(score: state.data.avgQuizScore),
                         const SizedBox(height: 24),
                         // Department breakdown
                         if (state.data.departmentStats.isNotEmpty) ...[
-                          _SectionTitle('Students by Department'),
+                          const _SectionTitle('Students by Department'),
                           const SizedBox(height: 12),
                           _DepartmentChart(stats: state.data.departmentStats),
                           const SizedBox(height: 24),
                         ],
                         // Content stats
-                        _SectionTitle('Content Statistics'),
+                        const _SectionTitle('Content Statistics'),
                         const SizedBox(height: 12),
                         _ContentStatsCard(state: state),
                         const SizedBox(height: 40),

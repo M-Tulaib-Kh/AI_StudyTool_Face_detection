@@ -82,7 +82,7 @@ class _AITutorScreenState extends ConsumerState<AITutorScreen> {
         title: Row(children: [
           Container(
             width: 36, height: 36,
-            decoration: BoxDecoration(gradient: const LinearGradient(colors: [AppColors.primary, AppColors.accent]), shape: BoxShape.circle),
+            decoration: const BoxDecoration(gradient: LinearGradient(colors: [AppColors.primary, AppColors.accent]), shape: BoxShape.circle),
             child: const Icon(Icons.psychology, color: Colors.white, size: 20),
           ),
           const SizedBox(width: 10),
@@ -167,8 +167,8 @@ class _AITutorScreenState extends ConsumerState<AITutorScreen> {
               onTap: _send,
               child: Container(
                 width: 44, height: 44,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(colors: [AppColors.primary, AppColors.accent]),
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(colors: [AppColors.primary, AppColors.accent]),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(Icons.send_rounded, color: Colors.white, size: 20),
@@ -196,7 +196,7 @@ class _MessageBubble extends StatelessWidget {
           if (!message.isUser) ...[
             Container(
               width: 32, height: 32,
-              decoration: BoxDecoration(gradient: const LinearGradient(colors: [AppColors.primary, AppColors.accent]), shape: BoxShape.circle),
+              decoration: const BoxDecoration(gradient: LinearGradient(colors: [AppColors.primary, AppColors.accent]), shape: BoxShape.circle),
               child: const Icon(Icons.psychology, color: Colors.white, size: 16),
             ),
             const SizedBox(width: 8),

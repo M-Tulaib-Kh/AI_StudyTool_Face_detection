@@ -95,7 +95,7 @@ class StudentHomeScreen extends ConsumerWidget {
             ),
           ),
 
-          SliverToBoxAdapter(child: const SizedBox(height: 16)),
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
 
           // Hero banner
           SliverToBoxAdapter(
@@ -111,7 +111,7 @@ class StudentHomeScreen extends ConsumerWidget {
             ),
           ),
 
-          SliverToBoxAdapter(child: const SizedBox(height: 16)),
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
 
           // Study session CTA
           SliverToBoxAdapter(
@@ -123,7 +123,7 @@ class StudentHomeScreen extends ConsumerWidget {
             ),
           ),
 
-          SliverToBoxAdapter(child: const SizedBox(height: 16)),
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
 
           // Focus insights (daily goal ring, 14-day heat strip)
           SliverToBoxAdapter(
@@ -136,7 +136,7 @@ class StudentHomeScreen extends ConsumerWidget {
             ),
           ),
 
-          SliverToBoxAdapter(child: const SizedBox(height: 16)),
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
 
           // Quick Actions grid (2 rows of 4)
           SliverToBoxAdapter(
@@ -193,7 +193,7 @@ class StudentHomeScreen extends ConsumerWidget {
             ).animate().fadeIn(delay: 200.ms),
           ),
 
-          SliverToBoxAdapter(child: const SizedBox(height: 20)),
+          const SliverToBoxAdapter(child: SizedBox(height: 20)),
 
           // Upcoming assignments
           SliverToBoxAdapter(
@@ -205,9 +205,9 @@ class StudentHomeScreen extends ConsumerWidget {
             ),
           ),
           if (state.isLoading)
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
                 child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 20),
                     child: ShimmerLoader(height: 90, borderRadius: 14)))
           else
             SliverPadding(
@@ -218,8 +218,9 @@ class StudentHomeScreen extends ConsumerWidget {
                     .where((a) => !a.isOverdue)
                     .take(3)
                     .toList();
-                if (pending.isEmpty)
+                if (pending.isEmpty) {
                   return const _EmptyCard('No upcoming assignments');
+                }
                 if (i >= pending.length) return null;
                 return _AssignCard(
                     a: pending[i],
@@ -236,7 +237,7 @@ class StudentHomeScreen extends ConsumerWidget {
                               .length)),
             ),
 
-          SliverToBoxAdapter(child: const SizedBox(height: 20)),
+          const SliverToBoxAdapter(child: SizedBox(height: 20)),
 
           // Recent lectures
           SliverToBoxAdapter(
@@ -248,9 +249,9 @@ class StudentHomeScreen extends ConsumerWidget {
             ),
           ),
           if (state.isLoading)
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
                 child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: EdgeInsets.symmetric(horizontal: 20),
                     child: ShimmerLoader(height: 80, borderRadius: 14)))
           else
             SliverPadding(
@@ -258,8 +259,9 @@ class StudentHomeScreen extends ConsumerWidget {
               sliver: SliverList(
                   delegate: SliverChildBuilderDelegate((_, i) {
                 final lectures = state.lectures.take(3).toList();
-                if (lectures.isEmpty)
+                if (lectures.isEmpty) {
                   return const _EmptyCard('No lectures yet');
+                }
                 if (i >= lectures.length) return null;
                 final l = lectures[i];
                 return _LectureCard(
@@ -270,7 +272,7 @@ class StudentHomeScreen extends ConsumerWidget {
                           : state.lectures.take(3).length)),
             ),
 
-          SliverToBoxAdapter(child: const SizedBox(height: 100)),
+          const SliverToBoxAdapter(child: SizedBox(height: 100)),
         ],
       ),
     );
@@ -298,7 +300,7 @@ class _QuickBtn extends StatelessWidget {
           ),
           const SizedBox(height: 5),
           Text(label,
-              style: TextStyle(
+              style: const TextStyle(
                   color: AppColors.darkMuted,
                   fontSize: 10,
                   fontWeight: FontWeight.w600),

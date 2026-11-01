@@ -282,7 +282,7 @@ class _PdfViewerPageState extends State<_PdfViewerPage> {
             child: Column(mainAxisSize: MainAxisSize.min, children: [
               const Icon(Icons.picture_as_pdf, size: 64, color: AppColors.darkMuted),
               const SizedBox(height: 16),
-              Text('Could not load PDF', style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600)),
+              const Text('Could not load PDF', style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600)),
               const SizedBox(height: 8),
               Text(_error!, style: const TextStyle(color: AppColors.darkMuted, fontSize: 13), textAlign: TextAlign.center),
               const SizedBox(height: 20),

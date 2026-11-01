@@ -163,11 +163,12 @@ class _LecturesList extends StatelessWidget {
   const _LecturesList({required this.items});
   @override
   Widget build(BuildContext context) {
-    if (items.isEmpty)
+    if (items.isEmpty) {
       return const EmptyState(
           icon: Icons.library_books_outlined,
           title: 'No Lectures Yet',
           subtitle: 'Upload your first lecture');
+    }
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: items.length,
@@ -220,11 +221,12 @@ class _AssignmentsList extends StatelessWidget {
   const _AssignmentsList({required this.items});
   @override
   Widget build(BuildContext context) {
-    if (items.isEmpty)
+    if (items.isEmpty) {
       return const EmptyState(
           icon: Icons.assignment_outlined,
           title: 'No Assignments Yet',
           subtitle: 'Create your first assignment');
+    }
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: items.length,
@@ -249,11 +251,12 @@ class _QuizzesList extends StatelessWidget {
   const _QuizzesList({required this.items});
   @override
   Widget build(BuildContext context) {
-    if (items.isEmpty)
+    if (items.isEmpty) {
       return const EmptyState(
           icon: Icons.quiz_outlined,
           title: 'No Quizzes Yet',
           subtitle: 'Create your first quiz');
+    }
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: items.length,
@@ -279,11 +282,12 @@ class _SubmissionsList extends ConsumerWidget {
   const _SubmissionsList({required this.items, required this.assignments});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (items.isEmpty)
+    if (items.isEmpty) {
       return const EmptyState(
           icon: Icons.inbox_outlined,
           title: 'No Submissions Yet',
           subtitle: 'Student submissions will appear here');
+    }
     return ListView.separated(
       padding: const EdgeInsets.all(16),
       itemCount: items.length,

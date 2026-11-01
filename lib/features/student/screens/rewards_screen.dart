@@ -14,8 +14,10 @@ class RewardsScreen extends ConsumerWidget {
     final game = ref.watch(gameProvider);
     final session = ref.watch(sessionProvider);
 
-    if (game == null) return const ClayScaffold(backgroundColor: Color(0xFF060E1A),
+    if (game == null) {
+      return const ClayScaffold(backgroundColor: Color(0xFF060E1A),
       body: Padding(padding: EdgeInsets.all(16), child: ShimmerList(count: 5)));
+    }
 
     return ClayScaffold(
       backgroundColor: Colors.transparent,
