@@ -6,7 +6,6 @@ import '../../../core/theme/app_theme.dart';
 import '../../../providers/auth_provider.dart';
 import '../../../providers/academic_provider.dart';
 import '../../../data/models/models.dart';
-import '../../../services/ai_service.dart';
 import '../../../shared/widgets/app_button.dart';
 
 class GradeSubmissionScreen extends ConsumerStatefulWidget {
@@ -19,28 +18,10 @@ class GradeSubmissionScreen extends ConsumerStatefulWidget {
 class _GradeSubmissionScreenState extends ConsumerState<GradeSubmissionScreen> {
   final _marksCtrl = TextEditingController();
   final _feedbackCtrl = TextEditingController();
-  bool _saving = false, _aiGrading = false, _viewingPdf = false;
+  bool _saving = false, _viewingPdf = false;
 
   @override
   void dispose() { _marksCtrl.dispose(); _feedbackCtrl.dispose(); super.dispose(); }
-
-  Future<void> _aiGrade(Submission sub, Assignment? assign) async {
-    if (assign == null || sub.fileUrl.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('No file to grade')));
-      return;
-    }
-    setState(() => _aiGrading = true);
-    try {
-      final result = await AiService.instance.gradeSubmission(
-        assignmentPrompt: '${assign.title}\n${assign.description}\n${assign.instructions}',
-        submissionText: 'Student submitted file: ${sub.fileName}. Please evaluate based on assignment requirements.',
-        totalMarks: assign.totalMarks);
-      if (mounted) setState(() { _marksCtrl.text = '${result.marks}'; _feedbackCtrl.text = result.feedback; });
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('AI grading complete!'), backgroundColor: AppColors.success));
-    } catch (e) {
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('AI error: $e'), backgroundColor: AppColors.danger));
-    } finally { if (mounted) setState(() => _aiGrading = false); }
-  }
 
   Future<void> _save(Submission sub, Assignment? assign) async {
     final marks = int.tryParse(_marksCtrl.text);
@@ -69,14 +50,14 @@ class _GradeSubmissionScreenState extends ConsumerState<GradeSubmissionScreen> {
   Widget build(BuildContext context) {
     final state = ref.watch(academicProvider);
     final sub = state.submissions.where((s) => s.id == widget.submissionId).firstOrNull;
-    if (sub == null) return Scaffold(backgroundColor: AppColors.darkBackground,
+    if (sub == null) return ClayScaffold(backgroundColor: Colors.transparent,
       body: const Center(child: Text('Submission not found', style: TextStyle(color: Colors.white))));
     final assign = state.assignments.where((a) => a.id == sub.assignmentId).firstOrNull;
     final isGraded = sub.status == SubmissionStatus.graded;
     if (isGraded && _marksCtrl.text.isEmpty) { _marksCtrl.text = '${sub.marksObtained ?? 0}'; _feedbackCtrl.text = sub.feedback ?? ''; }
 
     if (_viewingPdf && sub.fileUrl.isNotEmpty) {
-      return Scaffold(
+      return ClayScaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
           backgroundColor: AppColors.darkCard,
@@ -87,10 +68,10 @@ class _GradeSubmissionScreenState extends ConsumerState<GradeSubmissionScreen> {
       );
     }
 
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
-        backgroundColor: AppColors.darkBackground, elevation: 0,
+        backgroundColor: Colors.transparent, elevation: 0,
         leading: IconButton(icon: const Icon(Icons.arrow_back, color: Colors.white), onPressed: () => context.pop()),
         title: const Text('Grade Submission', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
       ),
@@ -99,7 +80,7 @@ class _GradeSubmissionScreenState extends ConsumerState<GradeSubmissionScreen> {
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           // Submission info
           Container(padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(color: AppColors.darkCard, borderRadius: BorderRadius.circular(16), border: Border.all(color: AppColors.darkBorder)),
+            decoration: BoxDecoration(boxShadow: AppShadows.clay, color: AppColors.darkCard, borderRadius: BorderRadius.circular(24), border: Border.all(color: AppColors.darkBorder)),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
                 const CircleAvatar(radius: 20, backgroundColor: AppColors.primary,
@@ -133,10 +114,6 @@ class _GradeSubmissionScreenState extends ConsumerState<GradeSubmissionScreen> {
               else const Text('No file submitted', style: TextStyle(color: AppColors.darkMuted)),
             ])),
           const SizedBox(height: 20),
-
-          // AI Grade button
-          AppButton(label: _aiGrading ? 'AI Grading...' : 'Auto-Grade with AI', loading: _aiGrading,
-            outline: true, icon: Icons.auto_awesome, onTap: () => _aiGrade(sub, assign)),
           const SizedBox(height: 20),
 
           // Marks input
