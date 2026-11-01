@@ -55,11 +55,11 @@ class RankingScreen extends ConsumerWidget {
     final rankingAsync = ref.watch(rankingProvider);
     final currentUser = ref.watch(currentUserProvider);
 
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: const Text('Leaderboard', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
-        backgroundColor: AppColors.darkBackground,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
         actions: [
@@ -193,9 +193,9 @@ class _RankCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 8),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      decoration: BoxDecoration(
+      decoration: BoxDecoration(boxShadow: AppShadows.clay, 
         color: isMe ? AppColors.primary.withValues(alpha: 0.12) : AppColors.darkCard,
-        borderRadius: BorderRadius.circular(14),
+        borderRadius: BorderRadius.circular(22),
         border: Border.all(
             color: isMe ? AppColors.primary.withValues(alpha: 0.4) : AppColors.darkBorder),
       ),

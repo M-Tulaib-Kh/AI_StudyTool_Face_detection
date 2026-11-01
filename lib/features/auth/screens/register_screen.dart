@@ -38,8 +38,8 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     final loading = ref.watch(authProvider).isLoading;
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -109,9 +109,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           child: Container(
             margin: const EdgeInsets.only(right: 8),
             padding: const EdgeInsets.symmetric(vertical: 12),
-            decoration: BoxDecoration(
+            decoration: BoxDecoration(boxShadow: AppShadows.clay, 
               color: selected ? AppColors.primary.withValues(alpha: 0.2) : AppColors.darkCard,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(20),
               border: Border.all(color: selected ? AppColors.primary : AppColors.darkBorder, width: selected ? 1.5 : 1),
             ),
             child: Column(children: [

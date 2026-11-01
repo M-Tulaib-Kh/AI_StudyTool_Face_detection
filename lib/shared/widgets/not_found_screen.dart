@@ -7,8 +7,8 @@ class NotFoundScreen extends StatelessWidget {
   const NotFoundScreen({super.key, required this.error});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       body: Center(
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           const Icon(Icons.error_outline, color: AppColors.danger, size: 64),

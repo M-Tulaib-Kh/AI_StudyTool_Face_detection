@@ -223,10 +223,10 @@ class _CreateContentScreenState extends ConsumerState<CreateContentScreen> {
     final myCourses =
         state.courses.where((c) => c.lecturerId == user?.id).toList();
 
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
-        backgroundColor: AppColors.darkBackground,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -478,11 +478,11 @@ class _CreateContentScreenState extends ConsumerState<CreateContentScreen> {
                   onTap: _pickAndUploadFile,
                   child: Container(
                     padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
+                    decoration: BoxDecoration(boxShadow: AppShadows.clay, 
                         color: _uploadedFileUrl != null
                             ? AppColors.success.withValues(alpha: 0.08)
                             : AppColors.darkCard,
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(22),
                         border: Border.all(
                             color: _uploadedFileUrl != null
                                 ? AppColors.success.withValues(alpha: 0.4)

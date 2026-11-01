@@ -70,8 +70,8 @@ class _LectureDetailScreenState extends ConsumerState<LectureDetailScreen> {
     // FIX 7.1: no crash — graceful null handling
     final lecture = state.lectures.where((l) => l.id == widget.lectureId).firstOrNull;
     if (lecture == null) {
-      return Scaffold(
-        backgroundColor: AppColors.darkBackground,
+      return ClayScaffold(
+        backgroundColor: Colors.transparent,
         body: Center(
           child: Column(mainAxisSize: MainAxisSize.min, children: [
             const Icon(Icons.error_outline, color: AppColors.danger, size: 48),
@@ -93,8 +93,8 @@ class _LectureDetailScreenState extends ConsumerState<LectureDetailScreen> {
       );
     }
 
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
@@ -103,9 +103,9 @@ class _LectureDetailScreenState extends ConsumerState<LectureDetailScreen> {
               onTap: () => context.pop(),
               child: Container(
                 padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
+                decoration: BoxDecoration(boxShadow: AppShadows.clay, 
                   color: AppColors.darkCard,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(18),
                   border: Border.all(color: AppColors.darkBorder),
                 ),
                 child: const Icon(Icons.arrow_back, color: AppColors.darkForeground, size: 20),
@@ -167,9 +167,9 @@ class _LectureDetailScreenState extends ConsumerState<LectureDetailScreen> {
               const SizedBox(height: 12),
               Container(
                 padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
+                decoration: BoxDecoration(boxShadow: AppShadows.clay, 
                   color: AppColors.darkCard,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(24),
                   border: Border.all(color: AppColors.darkBorder),
                 ),
                 child: Row(children: [
@@ -250,7 +250,7 @@ class _PdfViewerPageState extends State<_PdfViewerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ClayScaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: AppColors.darkCard,

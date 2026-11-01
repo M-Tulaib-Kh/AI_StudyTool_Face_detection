@@ -31,15 +31,15 @@ class _AttendanceReportScreenState
 
     final isLecturer = role == UserRole.lecturer || role == UserRole.admin;
 
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: Text(
           isLecturer ? 'Mark Attendance' : 'Attendance Report',
           style:
               const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
         ),
-        backgroundColor: AppColors.darkBackground,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
@@ -127,9 +127,9 @@ class _DateGroup extends StatelessWidget {
           return Container(
             margin: const EdgeInsets.only(bottom: 8),
             padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
+            decoration: BoxDecoration(boxShadow: AppShadows.clay, 
               color: AppColors.darkCard,
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(20),
               border: Border.all(color: AppColors.darkBorder),
             ),
             child: Row(
@@ -289,9 +289,9 @@ class _LecturerViewState extends ConsumerState<_LecturerView> {
                 child: Container(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  decoration: BoxDecoration(
+                  decoration: BoxDecoration(boxShadow: AppShadows.clay, 
                     color: AppColors.darkCard,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(20),
                     border: Border.all(color: AppColors.darkBorder),
                   ),
                   child: Row(
@@ -413,9 +413,9 @@ class _StudentAttendanceList extends ConsumerWidget {
             final current = statuses[st.id];
             return Container(
               padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
+              decoration: BoxDecoration(boxShadow: AppShadows.clay, 
                 color: AppColors.darkCard,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(20),
                 border: Border.all(color: AppColors.darkBorder),
               ),
               child: Column(

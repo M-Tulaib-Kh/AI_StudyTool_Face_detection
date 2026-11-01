@@ -25,8 +25,8 @@ class SessionResultScreen extends StatelessWidget {
     final subtitle = _success ? 'Great work! Keep up the momentum.' : 'Too many violations. Try again with better focus.';
     final efficiency = violations == 0 ? 100 : (100 - (violations * 33)).clamp(0, 100);
 
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),
@@ -85,7 +85,7 @@ class _StatBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Expanded(child: Container(
     padding: const EdgeInsets.all(14),
-    decoration: BoxDecoration(color: AppColors.darkCard, borderRadius: BorderRadius.circular(16),
+    decoration: BoxDecoration(boxShadow: AppShadows.clay, color: AppColors.darkCard, borderRadius: BorderRadius.circular(24),
       border: Border.all(color: color.withValues(alpha: 0.3))),
     child: Column(children: [
       Icon(icon, color: color, size: 24),

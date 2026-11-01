@@ -14,7 +14,7 @@ class QuizResultScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(academicProvider);
     final attempt = state.attempts.where((a) => a.id == attemptId).firstOrNull;
-    if (attempt == null) return Scaffold(backgroundColor: AppColors.darkBackground,
+    if (attempt == null) return ClayScaffold(backgroundColor: Colors.transparent,
       body: Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
         const Text('Result not found', style: TextStyle(color: Colors.white)),
         const SizedBox(height: 16),
@@ -26,8 +26,8 @@ class QuizResultScreen extends ConsumerWidget {
     final passed = pct >= 0.5;
     final grade = pct >= 0.9 ? 'A+' : pct >= 0.8 ? 'A' : pct >= 0.7 ? 'B' : pct >= 0.6 ? 'C' : pct >= 0.5 ? 'D' : 'F';
 
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -61,7 +61,7 @@ class QuizResultScreen extends ConsumerWidget {
               const SizedBox(height: 24),
               Container(
                 padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(color: AppColors.darkCard, borderRadius: BorderRadius.circular(16),
+                decoration: BoxDecoration(boxShadow: AppShadows.clay, color: AppColors.darkCard, borderRadius: BorderRadius.circular(24),
                   border: Border.all(color: AppColors.primary.withValues(alpha: 0.3))),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   const Row(children: [Icon(Icons.auto_awesome, color: AppColors.primary, size: 18),
@@ -86,7 +86,7 @@ class QuizResultScreen extends ConsumerWidget {
                 return Container(
                   margin: const EdgeInsets.only(bottom: 10),
                   padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(color: AppColors.darkCard, borderRadius: BorderRadius.circular(14),
+                  decoration: BoxDecoration(boxShadow: AppShadows.clay, color: AppColors.darkCard, borderRadius: BorderRadius.circular(22),
                     border: Border.all(color: color.withValues(alpha: 0.3))),
                   child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                     Row(children: [
@@ -121,7 +121,7 @@ class _ResultStat extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Expanded(child: Container(
     padding: const EdgeInsets.all(14),
-    decoration: BoxDecoration(color: AppColors.darkCard, borderRadius: BorderRadius.circular(16),
+    decoration: BoxDecoration(boxShadow: AppShadows.clay, color: AppColors.darkCard, borderRadius: BorderRadius.circular(24),
       border: Border.all(color: color.withValues(alpha: 0.3))),
     child: Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.end, children: [

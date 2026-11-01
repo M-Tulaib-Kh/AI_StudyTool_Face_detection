@@ -25,11 +25,11 @@ class LecturerPerformanceScreen extends ConsumerWidget {
     final totalLectures = state.lectures.where((l) => myCourses.any((c) => c.id == l.courseId)).length;
     final pendingGrades = state.submissions.where((s) => s.status == SubmissionStatus.submitted).length;
 
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: const Text('My Performance', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
-        backgroundColor: AppColors.darkBackground,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
@@ -62,8 +62,8 @@ class LecturerPerformanceScreen extends ConsumerWidget {
               return Container(
                 margin: const EdgeInsets.only(bottom: 10),
                 padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: AppColors.darkCard, borderRadius: BorderRadius.circular(14),
+                decoration: BoxDecoration(boxShadow: AppShadows.clay, 
+                  color: AppColors.darkCard, borderRadius: BorderRadius.circular(22),
                   border: Border.all(color: AppColors.darkBorder),
                 ),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -93,7 +93,7 @@ class _Card extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
     padding: const EdgeInsets.all(14),
-    decoration: BoxDecoration(color: AppColors.darkCard, borderRadius: BorderRadius.circular(14), border: Border.all(color: color.withValues(alpha: 0.2))),
+    decoration: BoxDecoration(boxShadow: AppShadows.clay, color: AppColors.darkCard, borderRadius: BorderRadius.circular(22), border: Border.all(color: color.withValues(alpha: 0.2))),
     child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
       Container(padding: const EdgeInsets.all(6), decoration: BoxDecoration(color: color.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(8)), child: Icon(icon, color: color, size: 16)),
       Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

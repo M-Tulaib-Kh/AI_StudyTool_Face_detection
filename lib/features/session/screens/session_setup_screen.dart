@@ -49,10 +49,10 @@ class _SessionSetupScreenState extends ConsumerState<SessionSetupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
-        backgroundColor: AppColors.darkBackground, elevation: 0,
+        backgroundColor: Colors.transparent, elevation: 0,
         title: const Text('Setup Session', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
       ),
       body: SingleChildScrollView(
@@ -69,9 +69,9 @@ class _SessionSetupScreenState extends ConsumerState<SessionSetupScreen> {
                 onTap: () => setState(() => _durationMinutes = d),
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-                  decoration: BoxDecoration(
+                  decoration: BoxDecoration(boxShadow: AppShadows.clay, 
                     color: sel ? AppColors.primary : AppColors.darkCard,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(20),
                     border: Border.all(color: sel ? AppColors.primary : AppColors.darkBorder),
                   ),
                   child: Text('${d}m', style: TextStyle(
@@ -90,7 +90,7 @@ class _SessionSetupScreenState extends ConsumerState<SessionSetupScreen> {
           const SizedBox(height: 12),
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(color: AppColors.darkCard, borderRadius: BorderRadius.circular(14),
+            decoration: BoxDecoration(boxShadow: AppShadows.clay, color: AppColors.darkCard, borderRadius: BorderRadius.circular(22),
               border: Border.all(color: _cameraEnabled ? AppColors.primary.withValues(alpha: 0.4) : AppColors.darkBorder)),
             child: Row(children: [
               Icon(_cameraEnabled ? Icons.center_focus_strong : Icons.videocam_off_outlined,
@@ -119,9 +119,9 @@ class _SessionSetupScreenState extends ConsumerState<SessionSetupScreen> {
                 onTap: () => setState(() => sel ? _blockedApps.remove(app) : _blockedApps.add(app)),
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
-                  decoration: BoxDecoration(
+                  decoration: BoxDecoration(boxShadow: AppShadows.clay, 
                     color: sel ? AppColors.danger.withValues(alpha: 0.15) : AppColors.darkCard,
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(28),
                     border: Border.all(color: sel ? AppColors.danger.withValues(alpha: 0.4) : AppColors.darkBorder),
                   ),
                   child: Row(mainAxisSize: MainAxisSize.min, children: [

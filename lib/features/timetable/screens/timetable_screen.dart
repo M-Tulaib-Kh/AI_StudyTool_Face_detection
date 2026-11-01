@@ -266,12 +266,12 @@ class _TimetableScreenState extends ConsumerState<TimetableScreen> {
   @override
   Widget build(BuildContext context) {
     final timetableAsync = ref.watch(timetableProvider);
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: const Text('Timetable',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
-        backgroundColor: AppColors.darkBackground,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
@@ -298,9 +298,9 @@ class _TimetableScreenState extends ConsumerState<TimetableScreen> {
                 child: Container(
                   width: 44,
                   margin: const EdgeInsets.only(right: 8),
-                  decoration: BoxDecoration(
+                  decoration: BoxDecoration(boxShadow: AppShadows.clay, 
                     color: selected ? AppColors.primary : AppColors.darkCard,
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(18),
                     border: Border.all(
                         color: selected
                             ? AppColors.primary
@@ -368,9 +368,9 @@ class _TimetableScreenState extends ConsumerState<TimetableScreen> {
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 10),
                       padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
+                      decoration: BoxDecoration(boxShadow: AppShadows.clay, 
                         color: AppColors.darkCard,
-                        borderRadius: BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(22),
                         border:
                             Border(left: BorderSide(color: color, width: 4)),
                       ),

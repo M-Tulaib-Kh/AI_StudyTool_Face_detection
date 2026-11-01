@@ -58,8 +58,8 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
         .where((s) => s.status == SubmissionStatus.submitted)
         .length;
 
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       body: RefreshIndicator(
         onRefresh: () async {
           _loadStats();
@@ -68,7 +68,7 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
         color: AppColors.primary,
         child: CustomScrollView(slivers: [
           SliverAppBar(
-            backgroundColor: AppColors.darkBackground,
+            backgroundColor: Colors.transparent,
             floating: true,
             elevation: 0,
             title: const Column(
@@ -149,9 +149,9 @@ class _AdminDashboardScreenState extends ConsumerState<AdminDashboardScreen> {
                   return Container(
                     margin: const EdgeInsets.only(bottom: 8),
                     padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
+                    decoration: BoxDecoration(boxShadow: AppShadows.clay, 
                         color: AppColors.darkCard,
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(20),
                         border: Border.all(color: AppColors.darkBorder)),
                     child: Row(children: [
                       CircleAvatar(
@@ -211,9 +211,9 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
+      decoration: BoxDecoration(boxShadow: AppShadows.clay, 
           color: AppColors.darkCard,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(24),
           border: Border.all(color: color.withValues(alpha: 0.2))),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Icon(icon, color: color, size: 24),

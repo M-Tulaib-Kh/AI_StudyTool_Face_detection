@@ -71,12 +71,12 @@ class _ParentPortalScreenState extends ConsumerState<ParentPortalScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: const Text('Parent Portal',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
-        backgroundColor: AppColors.darkBackground,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
@@ -86,9 +86,9 @@ class _ParentPortalScreenState extends ConsumerState<ParentPortalScreen> {
           // Search child by email
           Container(
             padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
+            decoration: BoxDecoration(boxShadow: AppShadows.clay, 
                 color: AppColors.darkCard,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(24),
                 border: Border.all(color: AppColors.darkBorder)),
             child: Column(children: [
               const Row(children: [
@@ -276,9 +276,9 @@ class _StatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Container(
         padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
+        decoration: BoxDecoration(boxShadow: AppShadows.clay, 
             color: AppColors.darkCard,
-            borderRadius: BorderRadius.circular(14),
+            borderRadius: BorderRadius.circular(22),
             border: Border.all(color: color.withValues(alpha: 0.2))),
         child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -22,11 +22,11 @@ class AttendanceScreen extends ConsumerWidget {
     final summaries = attendanceState.summariesForStudent(user.id, courseNames);
     final overall = attendanceState.overallPercentage(user.id);
 
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: const Text('Attendance', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
-        backgroundColor: AppColors.darkBackground,
+        backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.white),
         actions: [
@@ -88,9 +88,9 @@ class _OverallCard extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
+      decoration: BoxDecoration(boxShadow: AppShadows.clay, 
         color: AppColors.darkCard,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(28),
         border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Row(
@@ -150,9 +150,9 @@ class _SubjectAttendanceCard extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
+      decoration: BoxDecoration(boxShadow: AppShadows.clay, 
         color: AppColors.darkCard,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(24),
         border: Border.all(color: AppColors.darkBorder),
       ),
       child: Column(

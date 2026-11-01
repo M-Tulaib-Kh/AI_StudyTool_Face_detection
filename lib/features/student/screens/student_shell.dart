@@ -9,7 +9,7 @@ class StudentShell extends StatelessWidget {
   static const _tabs = [
     ('/student', Icons.home_outlined, Icons.home, 'Home'),
     ('/student/academic', Icons.school_outlined, Icons.school, 'Academic'),
-    ('/student/session', Icons.timer_outlined, Icons.timer, 'Session'),
+    ('/student/session', Icons.timer_outlined, Icons.timer, 'Focus'),
     ('/student/rewards', Icons.emoji_events_outlined, Icons.emoji_events, 'Rewards'),
     ('/student/profile', Icons.person_outlined, Icons.person, 'Profile'),
   ];
@@ -22,37 +22,12 @@ class StudentShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final idx = _index(context);
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
+    return ClayScaffold(
       body: child,
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: AppColors.darkCard,
-          border: Border(top: BorderSide(color: AppColors.darkBorder, width: 0.5)),
-        ),
-        child: SafeArea(
-          child: SizedBox(height: 60,
-            child: Row(
-              children: _tabs.asMap().entries.map((e) {
-                final selected = e.key == idx;
-                final tab = e.value;
-                return Expanded(child: GestureDetector(
-                  onTap: () => context.go(tab.$1),
-                  behavior: HitTestBehavior.opaque,
-                  child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Icon(selected ? tab.$3 : tab.$2,
-                      color: selected ? AppColors.primary : AppColors.darkMuted, size: 22),
-                    const SizedBox(height: 3),
-                    Text(tab.$4, style: TextStyle(
-                      color: selected ? AppColors.primary : AppColors.darkMuted,
-                      fontSize: 10, fontWeight: selected ? FontWeight.w600 : FontWeight.normal)),
-                  ]),
-                ));
-              }).toList(),
-            ),
-          ),
-        ),
+      bottomNavigationBar: ClayFloatingNav(
+        currentIndex: _index(context),
+        items: [for (final t in _tabs) ClayNavItem(t.$2, t.$3, t.$4)],
+        onTap: (i) => context.go(_tabs[i].$1),
       ),
     );
   }

@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+export 'clay.dart';
+
 class AppColors {
   // ─── Brand ─────────────────────────────────────────────────
-  static const primary = Color(0xFF5B8FF9);
-  static const accent = Color(0xFF00D4FF);
-  static const gradientStart = Color(0xFF5B8FF9);
-  static const gradientEnd = Color(0xFF7B6FEF);
+  static const primary = Color(0xFF7C83FF);
+  static const accent = Color(0xFF5EEAD4);
+  static const gradientStart = Color(0xFF7C83FF);
+  static const gradientEnd = Color(0xFFB37BFF);
 
   // ─── Semantic ───────────────────────────────────────────────
-  static const success = Color(0xFF10B981);
-  static const warning = Color(0xFFF59E0B);
-  static const danger = Color(0xFFEF4444);
+  static const success = Color(0xFF34D399);
+  static const warning = Color(0xFFFBBF24);
+  static const danger = Color(0xFFF87171);
 
   // ─── Dark theme ─────────────────────────────────────────────
-  static const darkBackground = Color(0xFF060E1A);
-  static const darkSurface = Color(0xFF0A1628);
-  static const darkCard = Color(0xFF0D1E32);
-  static const darkSecondary = Color(0xFF122540);
-  static const darkBorder = Color(0xFF1A2E47);
-  static const darkForeground = Color(0xFFE8EDFF);
-  static const darkMuted = Color(0xFF7B8DB0);
+  static const darkBackground = Color(0xFF111327);
+  static const darkSurface = Color(0xFF171A33);
+  static const darkCard = Color(0xFF1E2244);
+  static const darkSecondary = Color(0xFF282D56);
+  static const darkBorder = Color(0xFF2E3466);
+  static const darkForeground = Color(0xFFF1F3FF);
+  static const darkMuted = Color(0xFFA0A8D0);
 
   // ─── Light theme ────────────────────────────────────────────
   static const lightBackground = Color(0xFFF4F7FF);
@@ -35,7 +37,7 @@ class AppColors {
 }
 
 class AppTheme {
-  static const _radius = 16.0;
+  static const _radius = 24.0;
 
   static ThemeData dark() {
     return ThemeData(
@@ -66,15 +68,15 @@ class AppTheme {
         filled: true,
         fillColor: AppColors.darkSecondary,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.darkBorder),
+          borderRadius: BorderRadius.circular(20),
+          borderSide: const BorderSide(color: Colors.transparent),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.darkBorder),
+          borderRadius: BorderRadius.circular(20),
+          borderSide: const BorderSide(color: Color(0x1FFFFFFF)),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(20),
           borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
         ),
         hintStyle: const TextStyle(color: AppColors.darkMuted),
@@ -100,7 +102,9 @@ class AppTheme {
       dividerColor: AppColors.darkBorder,
       iconTheme: const IconThemeData(color: AppColors.darkForeground),
       appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.darkBackground,
+        backgroundColor: Colors.transparent,
+        surfaceTintColor: Colors.transparent,
+        scrolledUnderElevation: 0,
         elevation: 0,
         foregroundColor: AppColors.darkForeground,
         titleTextStyle: GoogleFonts.inter(
