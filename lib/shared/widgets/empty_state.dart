@@ -15,11 +15,17 @@ class EmptyState extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(32),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          Container(
-            width: 80, height: 80,
-            decoration: BoxDecoration(color: AppColors.darkCard, borderRadius: BorderRadius.circular(24), border: Border.all(color: AppColors.darkBorder)),
-            child: Icon(icon, size: 36, color: AppColors.darkMuted),
-          ),
+          Image.asset('assets/images/empty_state.png',
+              height: 130,
+              errorBuilder: (_, __, ___) => Container(
+                    width: 80,
+                    height: 80,
+                    decoration: BoxDecoration(
+                        color: AppColors.darkCard,
+                        borderRadius: BorderRadius.circular(28),
+                        boxShadow: AppShadows.clay),
+                    child: Icon(icon, size: 36, color: AppColors.darkMuted),
+                  )),
           const SizedBox(height: 16),
           Text(title, style: const TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w700), textAlign: TextAlign.center),
           const SizedBox(height: 6),

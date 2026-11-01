@@ -14,22 +14,29 @@ class RewardsScreen extends ConsumerWidget {
     final game = ref.watch(gameProvider);
     final session = ref.watch(sessionProvider);
 
-    if (game == null) return const Scaffold(backgroundColor: Color(0xFF060E1A),
+    if (game == null) return const ClayScaffold(backgroundColor: Color(0xFF060E1A),
       body: Padding(padding: EdgeInsets.all(16), child: ShimmerList(count: 5)));
 
-    return Scaffold(
-      backgroundColor: AppColors.darkBackground,
-      appBar: AppBar(backgroundColor: AppColors.darkBackground, elevation: 0,
+    return ClayScaffold(
+      backgroundColor: Colors.transparent,
+      appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0,
         title: const Text('Rewards', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w800))),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Center(
+            child: Image.asset('assets/images/hero_rewards.png',
+                height: 140,
+                errorBuilder: (_, __, ___) => const SizedBox(height: 140)),
+          ),
+          const SizedBox(height: 8),
           // Level card
           Container(
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
               gradient: const LinearGradient(colors: [AppColors.primary, AppColors.gradientEnd]),
-              borderRadius: BorderRadius.circular(20)),
+              boxShadow: AppShadows.glow(AppColors.primary),
+              borderRadius: BorderRadius.circular(28)),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
                 const Icon(Icons.military_tech, color: Colors.white, size: 28),
@@ -63,9 +70,9 @@ class RewardsScreen extends ConsumerWidget {
           ...game.challenges.map((c) => Container(
             margin: const EdgeInsets.only(bottom: 12),
             padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
+            decoration: BoxDecoration(boxShadow: AppShadows.clay, 
               color: c.completed ? AppColors.success.withValues(alpha: 0.1) : AppColors.darkCard,
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(22),
               border: Border.all(color: c.completed ? AppColors.success.withValues(alpha: 0.3) : AppColors.darkBorder)),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Row(children: [
@@ -94,9 +101,9 @@ class RewardsScreen extends ConsumerWidget {
             crossAxisCount: 2, crossAxisSpacing: 12, mainAxisSpacing: 12, childAspectRatio: 1.5,
             children: game.badges.map((b) => Container(
               padding: const EdgeInsets.all(14),
-              decoration: BoxDecoration(
+              decoration: BoxDecoration(boxShadow: AppShadows.clay, 
                 color: b.unlocked ? AppColors.primary.withValues(alpha: 0.1) : AppColors.darkCard,
-                borderRadius: BorderRadius.circular(14),
+                borderRadius: BorderRadius.circular(22),
                 border: Border.all(color: b.unlocked ? AppColors.primary.withValues(alpha: 0.4) : AppColors.darkBorder)),
               child: Row(children: [
                 Container(width: 40, height: 40,
@@ -139,7 +146,7 @@ class _StatBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Expanded(child: Container(
     padding: const EdgeInsets.all(12),
-    decoration: BoxDecoration(color: AppColors.darkCard, borderRadius: BorderRadius.circular(14),
+    decoration: BoxDecoration(boxShadow: AppShadows.clay, color: AppColors.darkCard, borderRadius: BorderRadius.circular(22),
       border: Border.all(color: AppColors.darkBorder)),
     child: Column(children: [
       Icon(icon, color: color, size: 22),
